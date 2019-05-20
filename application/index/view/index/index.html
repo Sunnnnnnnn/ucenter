@@ -1,0 +1,748 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+
+<!--主体内容-->
+<div class="side-content index" data-original="">
+    <!--主体内容容器-->
+    <div class="window-box">
+        <!--主体-->
+        <div class="window-cut window-cut1">
+            <!--第一页-->
+            <div class="window-bin" data-hash="index">
+                <!--轮播图-->
+                <div style="" class="window-banner" data-title="广告">
+                    <div class="banner-box">
+                        <ul class="banner-cut">
+                        {volist name='advs' id='adv'}
+                            <li class="banner-bin swiper-lazy" data-background="{$adv.cover|get_uploads}">
+                                <p><a href="{$adv.url}" title="LSM"><b>{$adv.title}</b></a></p>
+                                <i class="swiper-lazy" data-background="{$adv.cover|get_uploads}"></i>
+                            </li>
+                            {/volist}
+                        </ul>
+                        <div class="banner-pager"></div>
+                    </div>
+                </div>
+                <style>
+                    .new_btn_color {
+                        background: #00C0FF !important;
+                    }
+                </style>
+                <!--新闻-->
+                <div style="background-image: url('__IMG__/w-yn-news-bg.jpg');background-position: center;
+                background-repeat: no-repeat;background-size: cover;width:100%;height:75%;">
+                <div class="w-new">
+                    <p class="w-new-title">新闻 / <i>News</i><span class="w-news-span"><var
+                        class="ctrl-left fa fa-caret-left"></var><var
+                        class="ctrl-right fa fa-caret-right"></var></span></p>
+
+                        <div class="w-new-row">
+                            <ul class="w-ul">
+                                <li class="w-ul-li">
+                                    <p class="w-new-row-title">企业新闻</p>
+
+                                    <div class="w-new-box">
+
+                                        <ol>
+                                            <li>
+                                                <a href="{:get_index('article/detail',['article_id'=>$data.news_first['article_id']])}">
+                                                    <img src="{$data.news_first['cover']|get_uploads}"
+                                                    alt=""/>
+
+                                                    <div>
+                                                        <span>{$data.news_first['dateline']|date='Y-m-d',###}</span>
+                                                        <b>{$data.news_first['title']}</b>
+
+                                                        <p>{$data.news_first['content']|strip_tags}...</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <div class="w-new-list">
+                                        <div class="w-new-list-c">
+                                            <div class="w-new-list-c-n">
+                                                <ol>
+                                                    {volist name='data.news' id = 'new'}
+                                                    <li>
+                                                        <a href="{:get_index('article/detail',['article_id'=>$new.article_id])}">{$new.title}</a>
+                                                    </li>
+                                                    {/volist}
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="w-ul-li">
+                                    <p class="w-new-row-title">站内帮助</p>
+
+                                    <div class="w-new-box">
+
+                                        <ol>
+                                            <li>
+                                                <a href="{:get_index('article/detail',['article_id'=>$data.helps_first['article_id']])}">
+                                                    <img src="{$data.helps_first['cover']|get_uploads}"
+                                                    alt=""/>
+
+                                                    <div>
+                                                        <span>{$data.helps_first['dateline']|date='Y-m-d',###}</span>
+                                                        <b>{$data.helps_first['title']}</b>
+
+                                                        <p>{$data.helps_first['content']|strip_tags}...</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                    <div class="w-new-list">
+                                        <div class="w-new-list-c">
+                                            <div class="w-new-list-c-n">
+                                                <ol>
+                                                    {volist name='data.helps' id = 'help'}
+                                                    <li>
+                                                        <a href="{:get_index('article/detail',['article_id'=>$help.article_id])}">{$help.title}</a>
+                                                    </li>
+                                                    {/volist}
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('.w-new-row').focusMpa();
+                var _ol = $('.w-new-list-c-n').find('ol');
+                $(window).resize(function () {
+                    for (var i = 0; i < _ol.length; i++) {
+                        var li_len = _ol.eq(i).find('li').length;
+                        _ol.eq(i).find('li').css('height', _ol.eq(i).height() / li_len + 'px');
+                    }
+                });
+                for (var i = 0; i < _ol.length; i++) {
+                    var li_len = _ol.eq(i).find('li').length;
+                    _ol.eq(i).find('li').css('height', _ol.eq(i).height() / li_len + 'px');
+                }
+
+            </script>
+            <!--第二页-->
+            <div class="window-bin swiper-lazy" data-hash="case" data-background="__IMG__/1490260564.png">
+                <div style="position: relative" class="window-back" data-title="会员商城">
+                    <div style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);width:100%;"
+                    class="padding-box padding-box1">
+                    <div class="title-box">
+                        <div class="title-name">
+                            <strong>会员商城</strong>
+                            <span>Member mall</span>
+                        </div>
+                        <div class="case-ctrl ctrl-box swiper-no-swiping">
+                            <span class="ctrl-left"><i class="fa fa-caret-left"></i></span>
+                            <span class="ctrl-right"><i class="fa fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="case-box">
+                        <ul style="width:100%;" class="case-cut">
+                            {volist name='data.products' id = 'product'}
+                            <li class=" case-bin1 first">
+                                <a href="{:get_index('product/detail',['product_id' => $product.product_id])}" title="{$product.name}">
+                                    <img data-src="{$product.cover|get_uploads}" class="swiper-lazy" alt="">
+                                    <dl>
+                                        <dt style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#fff;">
+                                            {$product.name}
+                                        </dt>
+
+                                        <dd style="color:#fff">价格：￥{$product.price}元/袋 <input type="button" value="立即购买" style="float:right;color:#000;padding:5px 10px;background-color: #fff;outline: none;border:none;"></dd>
+                                    </dl>
+                                </a>
+                            </li>
+                            {/volist}
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var _ul = $('.case-cut'), title_box = $('.title-box'), case_box = $('.case-box');
+            var _li_len = _ul.find('li').length;
+            var _li_w = _ul.find('li').eq(i).outerWidth(true)+1;
+            if (_li_len > 8) {
+                _ul.css('width', _li_w * 8 + 'px');
+                for (var i = 0; i < 8; i++) {
+                    _ul.find('li').eq(i).addClass('case-bin');
+                }
+            } else {
+                _ul.css('width', _li_w * _li_len + 'px');
+            }
+
+        </script>
+        <!--第三页-->
+        <div class="window-bin window-bin1 swiper-lazy" data-hash="price" data-background="__IMG__/1490260564.png">
+            <div class="window-back" data-title="<font color=#333>产品</font>">
+                <div class="padding-box">
+
+                    <div class="title-box">
+                        <div class="title-name"><strong><font color=#333>会员权限公示</font></strong>
+                            <span>Member powe</span>
+                        </div>
+                        <div class="price-ctrl ctrl-box swiper-no-swiping">
+                            <span class="ctrl-left"><i class="fa fa-caret-left"></i></span>
+                            <span class="ctrl-right"><i class="fa fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-box">
+                <style type="text/css">
+                    .w-member a{
+                        padding: 5% 0;
+                    }
+                </style>
+                    <div style="height:auto;overflow: hidden;" class="price-cut w-hh">
+
+                        <!--铜牌-->
+                        <div style="" class="price-bin w-member">
+                            <a href="javascript:;" title="铜牌">
+
+                                <img src="__IMG__/w-tongpai.png"
+                                class="swiper-lazy" title="铜牌">
+                                <div>
+                                    <img src="__IMG__/w-tongpai1.png" alt=""/>
+                                    <p class="w-member-c">
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员商城商品折扣（可享9.8折）</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>在线咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>留言互动</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员积分</b>
+                                        </var>
+                                    </p>
+                                    <button class="btn1" type="button">立即升级</button>
+
+                                </div>
+
+                            </a>
+                        </div>
+
+                        <!--银牌-->
+                        <div style="" class="price-bin w-member">
+                            <a href="javascript:;" title="银牌">
+
+                                <img src="__IMG__/w-yinpai.png"
+                                class="swiper-lazy" title="银牌">
+                                <div>
+                                    <img src="__IMG__/w-yinpai1.png" alt=""/>
+                                    <p class="w-member-c w-member-c2">
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员商城商品折扣（可享9.5折）</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>在线咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>专家现场服务</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>留言互动</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员积分</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>汉唐展会、大赛及论坛</b>
+                                        </var>
+                                    </p>
+                                    <button class="btn2" type="button">立即升级</button>
+                                </div>
+                            </a>
+                        </div>
+                        <!--<p style="clear: both"></p>-->
+                        <!--金牌-->
+                        <div style="" class="price-bin w-member">
+                            <a href="javascript:;" title="金牌">
+
+                                <img src="__IMG__/w-jinpai.png"
+                                class="swiper-lazy" title="金牌">
+                                <div>
+                                    <img src="__IMG__/w-jinpai1.png" alt=""/>
+                                    <p class="w-member-c w-member-c2">
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员商城商品折扣（可享9折）</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>在线咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>生日礼包</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>留言互动</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>免费栽培环境检测</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员积分</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>专家现场服务</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>农场规划、管理及咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>汉唐展会、大赛及论坛</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>农产品检测认证</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>联合品牌使用</b>
+                                        </var>
+                                    </p>
+                                    <button class="btn3" type="button">立即升级</button>
+
+                                </div>
+
+                            </a>
+                        </div>
+                        <!--钻石-->
+                        <div style="" class="price-bin w-member">
+                            <a href="javascript:;" title="钻石">
+
+                                <img src="__IMG__/w-zhuanshi.png"
+                                class="swiper-lazy" title="钻石">
+                                <div>
+                                    <img src="__IMG__/w-zuanshi1.png" alt=""/>
+                                    <p class="w-member-c w-member-c2">
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员商城商品折扣（可享8折）</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>在线咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>生日礼包</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>留言互动</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>免费栽培环境检测</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>会员积分</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>专家现场服务</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>农场规划、管理及咨询</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>农场托管</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>免费农场店铺</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>汉唐展会、大赛及论坛</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>国际交流</b>
+                                        </var>
+
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>农产品检测认证</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>联合品牌使用</b>
+                                        </var>
+                                        <var>
+                                            <i style="background-image: url('__IMG__/w-g.png')"></i>
+                                            <b>整车运费补贴</b>
+                                        </var>
+
+                                    </p>
+                                    <button class="btn4" type="button">立即升级</button>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                 $('.w-member').hover(function(){
+                    $(this).find('a>div').stop(true,true).fadeIn()
+                },function(){
+                 $(this).find('a>div').stop(true,true).fadeOut()
+             });
+                 var _btn=$('.w-member').find('a>div>button');
+                 _btn.on('click',function(){
+                    var _href=$(this).attr('data-href');
+                    $(this).parents('a').attr('href',_href);
+                })
+                 $('.btn1').on('click',function () {
+                    var obj={'product_id':32};
+                    $.ajax({
+                        url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                        type:'GET',
+                        async:false,
+                        data:'',
+                        success:function(data){
+                            if(data.code==200){
+                                if(data.data==0){
+                                    alert('你还没有登录,请先登录!');
+                                     $('.w-yn-login-mash').fadeIn();
+                                     $('.w-login').show();
+                                     $('.pp').val('1');
+                                }else if (data.data==1) {
+                                     $.ajax({
+                                        url:'http://ucenter.znc365.com/member.php/shop/addOrderByProductId',
+                                        type:'POST',
+                                        data:obj,
+                                        success:function(data){
+                                            console.log(data)
+                                            if(data.code==200){
+                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                            }else{
+                                                alert(data.message);
+                                            }
+                                        },error:function(){
+                                            alert("服务器错误,请稍后再试!");
+                                        }
+                                    })
+                                    
+                                }
+                            }else{
+                                alert('获取登录状态失败!')
+                            }
+                        }
+                    })
+                 })
+
+                 $('.btn2').on('click',function () {
+                    var obj={'product_id':33};
+                    $.ajax({
+                        url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                        type:'GET',
+                        async:false,
+                        data:'',
+                        success:function(data){
+                            if(data.code==200){
+                                if(data.data==0){
+                                    alert('你还没有登录,请先登录!');
+                                     $('.w-yn-login-mash').fadeIn();
+                                     $('.w-login').show();
+                                     $('.pp').val('1');
+                                }else if (data.data==1) {
+                                     $.ajax({
+                                        url:'http://ucenter.znc365.com/member.php/shop/addOrderByProductId',
+                                        type:'POST',
+                                        data:obj,
+                                        success:function(data){
+                                            console.log(data)
+                                            if(data.code==200){
+                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                            }else{
+                                                alert(data.message);
+                                            }
+                                        },error:function(){
+                                            alert("服务器错误,请稍后再试!");
+                                        }
+                                    })
+                                    
+                                }
+                            }else{
+                                alert('获取登录状态失败!')
+                            }
+                        }
+                    })
+                 })
+
+                 $('.btn3').on('click',function () {
+                    var obj={'product_id':34};
+                    $.ajax({
+                        url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                        type:'GET',
+                        async:false,
+                        data:'',
+                        success:function(data){
+                            if(data.code==200){
+                                if(data.data==0){
+                                    alert('你还没有登录,请先登录!');
+                                     $('.w-yn-login-mash').fadeIn();
+                                     $('.w-login').show();
+                                     $('.pp').val('1');
+                                }else if (data.data==1) {
+                                     $.ajax({
+                                        url:'http://ucenter.znc365.com/member.php/shop/addOrderByProductId',
+                                        type:'POST',
+                                        data:obj,
+                                        success:function(data){
+                                            console.log(data)
+                                            if(data.code==200){
+                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                            }else{
+                                                alert(data.message);
+                                            }
+                                        },error:function(){
+                                            alert("服务器错误,请稍后再试!");
+                                        }
+                                    })
+                                    
+                                }
+                            }else{
+                                alert('获取登录状态失败!')
+                            }
+                        }
+                    })
+                 })
+
+                 $('.btn4').on('click',function () {
+                    var obj={'product_id':35};
+                    $.ajax({
+                        url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                        type:'GET',
+                        async:false,
+                        data:'',
+                        success:function(data){
+                            if(data.code==200){
+                                if(data.data==0){
+                                    alert('你还没有登录,请先登录!');
+                                     $('.w-yn-login-mash').fadeIn();
+                                     $('.w-login').show();
+                                     $('.pp').val('1');
+                                }else if (data.data==1) {
+                                     $.ajax({
+                                        url:'http://ucenter.znc365.com/member.php/shop/addOrderByProductId',
+                                        type:'POST',
+                                        data:obj,
+                                        success:function(data){
+                                            console.log(data)
+                                            if(data.code==200){
+                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                            }else{
+                                                alert(data.message);
+                                            }
+                                        },error:function(){
+                                            alert("服务器错误,请稍后再试!");
+                                        }
+                                    })
+                                    
+                                }
+                            }else{
+                                alert('获取登录状态失败!')
+                            }
+                        }
+                    })
+                 })
+
+
+            </script>
+        </div>
+    </div>
+    <!--第四页-->
+    <div class="window-bin window-bin1 swiper-lazy" data-hash="service" data-background="__IMG__/1490598854.png">
+        <div class="window-back" data-title="专家智库">
+            <div class="padding-box">
+                <div class="title-box">
+                    <div class="title-name about-name">
+
+                        <strong>专家智库</strong>
+                        <span>EXPERT</span>
+                    </div>
+                    <div class="about-title ctrl-box swiper-no-swiping">
+                        <span class="ctrl-left"><i class="fa fa-caret-left"></i></span>
+                        <span class="ctrl-right"><i class="fa fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="about-box">
+                    <ul class="about-cut">
+                        {volist name='data.experts' id='expert'}
+                        <li class="about-bin">
+                            <span class="left">
+                              <a href="{:get_index('expert/detail',['product_id'=>$expert.product_id])}" title="">
+                                  <img style="float: none;display: block;margin: auto;" class="swiper-lazy"
+                                  data-src="{$expert.cover|get_uploads}">
+                              </a>
+                          </span>
+                          <span class="right">
+                              <a href="{:get_index('expert/detail',['product_id'=>$expert.product_id])}" title="{$expert.name}"><h3>{$expert.name}</h3></a>
+                              <i>&nbsp;</i>
+                              <p>{$expert.desc}</p>
+                              </span>
+
+                          </li>
+                          {/volist}
+
+                      </ul>
+                      <div class="about-ctrl ctrl-box swiper-no-swiping">
+                        <span class="ctrl-left"><i class="fa fa-caret-left"></i></span>
+                        <span class="ctrl-right"><i class="fa fa-caret-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--第五页-->
+    <!-- <div class="window-bin window-bin1 swiper-lazy" data-hash="contact" data-background="__IMG__/1490254947.png">
+        <div class="window-back" data-title="<font color=#fff>联系我们</font>">
+            <div class="padding-box">
+                <div class="title-box">
+                    <div class="title-name">
+
+
+                        <strong><font color=#fff>联系我们</font></strong>
+                        <span>CONTACT</span>
+                    </div>
+                    <div class="contact-ctrl ctrl-box swiper-no-swiping">
+                        <span class="ctrl-left"><i class="fa fa-caret-left"></i></span>
+                        <span class="ctrl-right"><i class="fa fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <div class="contact-cut">
+                        <div class="contact-bin message-box">
+                            <form method="post" class="met-form met-form-validation" name="form1" id="form1"
+                            action="/e/enews/index.php">
+
+                            <input type="hidden" name="ecmsfrom" value="/">
+
+                            <input type="hidden" name="lang" value="cn">
+
+
+                            <div class="form-group ftype_input">
+
+
+                                <div>
+
+                                    <input name="name" id="name" class='form-control' type='text'
+                                    placeholder='姓名 ' data-fv-notempty="true"
+                                    data-fv-message="不能为空"/>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group ftype_input">
+
+
+                                <div>
+
+                                    <input name="mycall" type="text" id="mycall" class='form-control'
+                                    placeholder='电话 ' data-fv-notempty="true"
+                                    data-fv-message="不能为空"/>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group ftype_input">
+
+
+                                <div>
+
+                                    <input name="email" type="text" id="email" class='form-control'
+                                    placeholder='Email ' data-fv-notempty="true"
+                                    data-fv-message="不能为空"/>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group ftype_textarea">
+
+
+                                <div>
+
+                                    <textarea name="lytext" id="lytext" class='form-control'
+                                    data-fv-notempty="true" data-fv-message="不能为空"
+                                    placeholder='留言内容 ' rows='5'></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <input type="hidden" name="dede_fields"
+                            value="para115,text;para116,text;para117,text;para119,multitext"/>
+                            <input name="enews" type="hidden" id="enews" value="AddGbook"/>
+                            <input type="hidden" name="dede_fieldshash"
+                            value="7ec421abec034550b1dccf5f183fc4cb"/>
+
+                            <div class="submint">
+
+                                <button type="submit"
+                                class="btn btn-primary btn-block btn-squared more-box">
+                                <span>提交信息</span></button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="contact-bin contact-right"><p><em class="fa fa-map-marker"></em>
+                        地址：西安市沣东新城启航佳苑A14号楼1506室</p>
+
+                        <p><em class="fa fa-print"></em> 手机：13892894880</p>
+
+                        <p><em class="fa fa-envelope"></em> 邮箱：liushanmen@yeah.net</p>
+
+                        <p><em class="fa fa-phone"></em> 电话：4006-118-798</p>
+
+                        <p><em class="fa fa-qq"></em> QQ：327467550</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+    {include file="./public/static/block/index/foot.html"}

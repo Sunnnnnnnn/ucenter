@@ -1,0 +1,139 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+<!-- 左侧边结束 -->
+
+<!-- 内容开始 -->
+<div id="content" class="app-content" role="main">
+
+
+    <div class="app-content-body ">
+
+
+        <div class="bg-light lter b-b wrapper-md">
+
+            <h1 class="m-n font-thin h3">添加文章</h1>
+
+        </div>
+
+        <div class="wrapper-md">
+
+
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <form name="userinfoform" method="post" enctype="multipart/form-data"
+                    action="">
+
+
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <div class="table-responsive">
+
+
+                                <table width="100%" align="center"
+                                class="table table-bordered table-hover table-striped table_striped table_hover"
+                                cellpadding="3" cellspacing="1" bgcolor="#DBEAF5">
+                                <tbody>
+                                    <tr>
+                                        <td width="25%" height="25" bgcolor="ffffff">文章标题</td>
+                                        <td bgcolor="ffffff"><input name="title" class="form-control" type="text" id="truename" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="16%" height="25" bgcolor="ffffff">发布内容</td>
+                                        <td bgcolor="ffffff">
+                                            <textarea name="content" class="form-control" cols="65" rows="10" id="saytext"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                            <nav>
+
+                                <ul class="pagination">
+
+                                    <li>
+
+                                    <input type="submit" class="btn btn-primary" value="发布文章">
+
+                                    </li>
+                                </ul>
+
+                            </nav>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- /.row -->
+
+
+</div>
+
+<!-- /content -->
+
+<script type="text/javascript">
+
+    function checkInfo() {
+
+        document.getElementById("edit").action = zcenter_userurl + "cmd.php?act=MemberPst&token=358b2786be21c3c6cceff4c875314987";
+
+
+        if (!$("#edtEmail").val()) {
+
+            alert("邮箱格式不正确，可能过长或为空");
+
+            return false
+
+        }
+
+
+        if (!$("#edtName").val()) {
+
+            alert("名称不能为空或格式不正确");
+
+            return false
+
+        }
+
+
+        if ($("#edtPassword").val() !== $("#edtPasswordRe").val()) {
+
+            alert("请确认密码是否设置正确");
+
+            return false
+
+        }
+
+
+    }
+
+</script>
+
+</div>
+
+
+</div>
+
+<!-- 内容结束 -->
+
+<script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+
+
+<!-- 底部开始 -->
+
+{include file="./public/static/block/member/foot.html"}

@@ -1,0 +1,133 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+    <!-- 左侧边结束 -->
+    <!-- 内容开始 -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">已购商品</h1>
+            </div>
+            <style>
+                .pagination li a{
+                    float: none !important;
+                    display: inline;
+                    padding: 6px 12px;
+                }
+                .pagination li span{
+                    float: none !important;
+                    display: inline;
+                    padding: 6px 12px;
+                }
+                /*pc端*/
+                @media screen and (min-width: 993px) {
+                    .w-isshou{display: block;}
+                    .w-ishide{display: block;}
+                    .w-search-order{display: block;}
+                }
+                /*iPad*/
+                @media screen and (max-width: 992px){
+                    .w-isshou{display: block;}
+                    .w-ishide{display: block;}
+                    .w-search-order{display: block;}
+                }
+                /*手机*/
+                @media screen and (max-width: 767px){
+                    .w-isshou{display: block;}
+                    .w-ishide{display: none !important;}
+                    .w-order-num{display: block;}
+                    .w-search-order{display: none;}
+                }
+
+            </style>
+            <div class="wrapper-md">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form name="form1" method="get" action="">
+                            <div style="overflow: hidden;" class="form-group input-group">
+                               <span style="float: left;margin-right:5px;" class="w-order-num">
+                                    订单号为:
+                                    <input name="keyboard" type="text" id="keyboard" value="">
+                               </span>
+                                <span style="float: left;margin-right:5px;" class="w-search-order">
+                                    时间从
+                                <input name="starttime" type="text" id="starttime2" value="" size="12" onclick="setday(this)">
+                                到
+                                <input name="endtime" type="text" id="endtime2" value="" size="12" onclick="setday(this)">
+                                止的订单
+                                </span>
+                                <input style="padding: 2px 12px;vertical-align:baseline" type="submit" value="搜索" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped table_striped table_hover">
+                                <thead>
+                                <tr>
+                                    <th class="td15"><div align="center">编号(点击查看)</div></th>
+                                    <th class="td15"><div align="center">订购时间</div></th>
+<!--                                     <th class="td15"><div align="center">总金额</div></th>
+ -->                                    <th class="td15"><div align="center">支付方式</div></th>
+                                    <th class="td15"><div align="center">状态</div></th>
+                                    <th class="td15"><div align="center">操作</div></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name='list' id='item'}
+                                <tr>
+      
+                                    <td rowspan="1"><div align="center"><a href="#ecms" onclick="window.open('{:get_member("shop/orderdetail",['order_no'=>$item.order_id])}','','width=700,height=600,scrollbars=yes,resizable=yes');">
+                                        {$item.order_id}</a></div></td>
+                                    <td><div align="center">{$item.dateline|date='Y-m-d H:i:s',###}</div></td>
+                                    <!-- <td> <div align="center">
+                                        <a href="#ecms" title="商品额({$item.money})+运费(0.00)">{$item.money}元</a>        </div></td> -->
+                                    <td><div align="center">{if $item.paystatus == 0 || $item.paystatus == 1}线上支付{elseif $item.paystatus == 2 || $item.paystatus == 3}线下支付{elseif $item.paystatus == 4}积分兑换{/if}</div></td>
+                                    
+                                    <td> <div align="center"><strong>{if $item.paystatus == 0 || $item.paystatus == 2}未付款{elseif $item.paystatus == 1 || $item.paystatus == 3 || $item.paystatus == 4}已付款{else}其他{/if}</strong>
+                                    <td><div align="center">--</div></td>
+                                </tr>
+                                {/volist}
+                                
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <style>
+                /*分页*/
+                .pagination {}
+                .pagination li {display: inline-block;margin-right: -1px;padding: 5px;border: 1px solid #e2e2e2;min-width: 20px;text-align: center;}
+                .pagination li.active {background: #009688;color: #fff;border: 1px solid #009688;}
+                .pagination li a {display: block;text-align: center;}
+                </style>
+                <nav style="">
+                    {$list->render()}                
+                </nav>
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- 内容结束 -->
+    <script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+    <!-- 底部开始 -->
+     {include file="./public/static/block/member/foot.html"}

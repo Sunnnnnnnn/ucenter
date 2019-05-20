@@ -1,0 +1,309 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+<script type="text/javascript" src="__JS__/index/lib/raphael-min.js"></script>
+<script type="text/javascript" src="__JS__/index/res/chinaMapConfig.js"></script>
+<script type="text/javascript" src="__JS__/index/res/worldMapConfig.js"></script>
+<script type="text/javascript" src="__JS__/index/map.js"></script>
+<!--内容部分-->
+<!--主体内容-->
+<div class="side-content index" data-original="">
+    <!--主体内容容器-->
+    <div class="window-box">
+        <!--主体-->
+        <div class="window-cut">
+            <!--第四页-->
+            <div style="background: #000;" class="window-bin window-bin1 swiper-lazy" data-hash="" data-background="">
+                <!--搜索框 分类导航-->
+                <div class="subnav-box ">
+                    <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a><b><i class="fa fa-search"></i></b></a>
+
+                <form method="get" action="{:get_index('expert/index')}">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn"><i class="icon wb-search"
+                              aria-hidden="true"></i></button>
+                              <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                          </div>
+                      </div>
+                  </form>
+              </li>
+                <li class="subnav-bin subnav-search">
+                <style>
+                    .input-search1:before{
+                        border-color: transparent transparent #fff transparent !important;
+                    }
+                    .aa select{
+                        cursor: pointer;
+                        padding: 5px 10px;
+                        outline: none;
+                        font-size: 14px;
+                        color: #000;
+                        border: none;
+                        border: 1px solid #A0A0A0;
+                        border-right: none;
+                        display: block;
+                        float: left;
+                    }
+                    .aa select:last-child{
+                        border-right: 1px solid #A0A0A0;
+                    }
+                </style>
+                <a><b><i style="color:#555;font-weight:bold;" class="icon iconfont icon-down"></i></b></a>
+                <form class="input-search1" method="get" action="">
+                    <div class="form-group">
+                        <div style="background: #fff;width:234px;" class="">
+                            <div style="padding:5px 10px;overflow: hidden;" class="aa">
+                                <select name="expertise" id='expert_cate_select'>
+                                    <option value="0">专家特长</option>
+                                    {volist name='cates' id='cate'}
+                                      <option class="subnav-bin" value="{$cate.cate_id}"><b>{$cate.name}</b></option>
+                                     {/volist}
+                                </select>
+                                <!-- <select name="mechanism">
+                                    <option value="">所在机构</option>
+                                </select> -->
+                                <select id="expert_province_select">
+                                    <option value="">所在地区</option>
+                                    {volist name='provinces' id='province'}
+                                      <option class="subnav-bin" value="{$province.province_id}"><b>{$province.province_name}</b></option>
+                                     {/volist}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </li>
+
+            <script type="text/javascript">
+                $('#expert_cate_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?cate_id='+_val
+                    var p = '{$Think.get.province_id ? $Think.get.province_id :0}';
+                    if (p != false) {
+                        temp = temp+'&province_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+                $('#expert_province_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?province_id='+_val
+                    var p = '{$Think.get.cate_id ? $Think.get.cate_id :0}';
+                    if (p != false) {
+                        temp = temp+'&cate_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+            </script>
+
+
+
+              <li class="subnav-bin"><a href="{:get_index('expert/index')}"><b>专家列表</b></a></li>
+            <li class="subnav-bin">
+                <a  class="active"  href="{:get_index('expert/map')}" class='maphide'><b>专家地图</b></a>
+            </li>
+        </ul>
+                </div>
+
+                <div class="window-back" id="map-zhuanjia" data-title="">
+                    <style>
+                        /* 提示自定义 */
+
+                        .stateTip, #StateTip {
+                            display: none;
+                            position: absolute;
+                            padding: 8px;
+                            background: rgba(0,0,0,.5);
+                            -moz-border-radius: 4px;
+                            -webkit-border-radius: 4px;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            font-family: Tahoma;
+                            color: #333;
+                            border:2px dashed #000;
+                            -webkit-box-shadow: 0 0 5px rgba(255,255,255,.5);
+                            -moz-box-shadow:  0 0 5px rgba(255,255,255,.5);
+                            box-shadow:  0 0 5px rgba(255,255,255,.5);
+                        }
+                        .stateTipdiv{
+                            width:100%;
+                            height:auto;
+                        }
+                        .stateTipdiv>p{
+                            color:#fff;
+                            font-size: 14px;
+                        }
+                        .stateTipdiv div{
+                            height:auto;
+                            padding: 5px 0;
+                            color:#fff;
+                        }
+                        .stateTipdiv div ul{
+                            width:470px;
+                            height:auto;
+                            overflow: hidden;
+                        }
+                        .stateTipdiv div ul li{
+                            float: left;
+                            height:auto;
+                            width:235px;
+                            margin-top: 10px;
+                        }
+                        .stateTipdiv div ul li:nth-child(2n){
+                            float: right;
+                        }
+                        .stateTipdiv div ul li img{
+                            display: block;
+                            float: left;
+                            width:145px;
+                            height:103px;
+                        }
+                        .stateTipdiv div ul li span{
+                            display: block;
+                            float: right;
+                            width:80px;
+                            height:103px;
+                        }
+                        .stateTipdiv div ul li span var{
+                            display: block;
+                        }
+                        .mapInfo i {
+                            display: inline-block;
+                            width: 15px;
+                            height: 15px;
+                            margin-top: 5px;
+                            line-height: 15px;
+                            font-style: normal;
+                            background: #aeaeae;
+                            color: #fff;
+                            font-size: 11px;
+                            font-family: Tahoma;
+                            -webkit-border-radius: 15px;
+                            border-radius: 15px;
+                            text-align: center
+                        }
+
+                        .mapInfo i.active {
+                            background: #E27F21;
+                        }
+
+                        .mapInfo span {
+                            padding: 0 5px 0 3px;
+                        }
+
+                        .mapInfo b {
+                            font-weight: normal;
+                            color: #2770B5
+                        }
+                    </style>
+                    <div class="padding-box">
+                        <style type="text/css">
+                            @media screen and (min-width: 993px) {
+                                .map-zhuanjia{
+                                    display: block;
+                                }
+                                .itemCon{
+                                    overflow-y: hidden;
+                                    overflow-x: hidden;
+                                    height:100%;
+                                }
+                            }
+                            @media screen and (max-width: 992px) {
+                                .map-zhuanjia{
+                                    display: none !important;
+                                }
+                                .itemCon{
+                                    overflow-y: hidden;
+                                    overflow-x: hidden;
+                                    height:100%;
+                                }
+                            }
+                            @media screen and (max-width: 767px) {
+                                .map-zhuanjia{
+                                    display: none !important;
+                                }
+                                .itemCon{
+                                    overflow-x: scroll;
+                                    overflow-y: scroll;
+                                }
+                                .itemCon{
+                                    height:8rem;
+                                }
+                            }
+                        </style>
+                        <div style="width:100%;" class="">
+                            <div style="width:100%;" class="itemCon">
+
+                                <div  style="margin: auto;position: relative;" id="ChinaMap6" class="ChinaMap6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+
+                var obj_arr={};
+                $.ajax({
+                    url:'http://ucenter.znc365.com/index.php/expert/getListByProvince',
+                    type:'POST',
+                    data:{},
+                    success:function(data){
+                        if(data.code==200){
+                            for(var i=0;i<data.data.length;i++){
+                                var arr=[];
+                                arr.push(data.data[i]);
+                                [].push.apply(obj_arr,arr);
+                            }
+                        }
+                    },error:function(){
+                        alert('获取数据失败!')
+                    }
+
+                });
+            
+               
+
+                $('#ChinaMap6').SVGMap({
+                    mapName: 'china',
+                    showTip: true,
+                    mapWidth: 750,
+                    mapHeight: 650,
+                    hoverCallback: function(stateData, obj){
+                        $('.map-zhuanjia').find('ul>li').remove();
+                        var name=obj.name;
+                        for(var i=0;i<obj_arr.length;i++){
+                            if(obj.name==obj_arr[i].province_name){
+                                var li='<li><img src="http://ucenter.znc365.com/public/uploads/'+obj_arr[i].cover+'"/><span><var>'+obj_arr[i].name+'</var><br>'+obj_arr[i].desc+'</span></li>';
+                                $('.map-zhuanjia').find('ul').append(li);
+                            }
+                        }
+                    },
+                      clickCallback: function (stateData, obj) {
+                        var name=obj.name,sum='';
+                         for(var i=0;i<obj_arr.length;i++){
+                            if(obj.name==obj_arr[i].province_name){
+                                 sum=obj_arr[i].province_id;
+                            }
+                        }
+                        if(sum!=''){
+                            window.location.href='http://ucenter.znc365.com/index.php/expert/index?province_id='+sum
+                        }else{
+                            alert('此地区没有专家!')
+                        }
+                    }
+                });
+            
+
+                var bin_margin_top = Math.ceil(($('.window-back').parent('.window-bin1').height() - $('.window-back').height()) / 2);
+                if (bin_margin_top > 0)$('.window-back').css('margin-top', bin_margin_top / 2); else $('.window-back').removeAttr('style');
+
+            </script>
+
+
+            <link rel="stylesheet" type="text/css" href="__CSS__/index/SyntaxHighlighter.css">
+            <script type="text/javascript" src="__JS__/index/lib/SyntaxHighlighter.js"></script>
+            {include file="./public/static/block/index/foot.html"}

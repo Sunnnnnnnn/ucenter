@@ -1,0 +1,220 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+
+<!--内容-->
+<div class="side-content " data-original="">
+    <!--搜索框 分类导航-->
+    <div class="subnav-box ">
+        <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a><b><i class="fa fa-search"></i></b></a>
+
+                <form method="get" action="">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn"><i class="icon wb-search"
+                              aria-hidden="true"></i></button>
+                              <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                          </div>
+                      </div>
+                  </form>
+
+              </li>
+                <li class="subnav-bin subnav-search">
+                <style>
+                    .input-search1:before{
+                        border-color: transparent transparent #fff transparent !important;
+                    }
+                    .aa select{
+                        cursor: pointer;
+                        padding: 5px 10px;
+                        outline: none;
+                        font-size: 14px;
+                        color: #000;
+                        border: none;
+                        border: 1px solid #A0A0A0;
+                        border-right: none;
+                        display: block;
+                        float: left;
+                    }
+                    .aa select:last-child{
+                        border-right: 1px solid #A0A0A0;
+                    }
+                </style>
+                <a><b><i style="color:#555;font-weight:bold;" class="icon iconfont icon-down"></i></b></a>
+                <form class="input-search1" method="get" action="">
+                    <div class="form-group">
+                        <div style="background: #fff;width:234px;" class="">
+                            <div style="padding:5px 10px;overflow: hidden;" class="aa">
+                                <select name="expertise" id='expert_cate_select'>
+                                    <option value="0">专家特长</option>
+                                    {volist name='cates' id='cate'}
+                                      <option class="subnav-bin" value="{$cate.cate_id}"><b>{$cate.name}</b></option>
+                                     {/volist}
+                                </select>
+                                <!-- <select name="mechanism">
+                                    <option value="">所在机构</option>
+                                </select> -->
+                                <select id="expert_province_select">
+                                    <option value="">所在地区</option>
+                                    {volist name='provinces' id='province'}
+                                      <option class="subnav-bin" value="{$province.province_id}"><b>{$province.province_name}</b></option>
+                                     {/volist}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </li>
+
+            <script type="text/javascript">
+                $('#expert_cate_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?cate_id='+_val
+                    var p = '{$Think.get.province_id ? $Think.get.province_id :0}';
+                    if (p != false) {
+                        temp = temp+'&province_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+                $('#expert_province_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?province_id='+_val
+                    var p = '{$Think.get.cate_id ? $Think.get.cate_id :0}';
+                    if (p != false) {
+                        temp = temp+'&cate_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+            </script>
+
+
+
+              <li class="subnav-bin"><a class="active" href="{:get_index('expert/index')}"><b>专家列表</b></a></li>
+            <li class="subnav-bin">
+                <a href="{:get_index('expert/map')}" class='maphide'><b>专家地图</b></a>
+            </li>
+        </ul>
+           
+    </div>
+
+    <!--内容详情-->
+    <div class="met-img animsition imgs0">
+        <div class="container-fluid">
+            <div style="margin: auto;" class="row">
+             <style>
+
+                    dd h3{
+                        float: left;
+                        width:60%;
+                        line-height: 32px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    dd span{
+                        float: right;
+                        width:40%;
+                    }
+                    dd span a{
+                        border-left:1px solid #fff;
+                        float: right;color:#fff;font-size:14px;
+                        display: block;
+                        height:20px;
+                        margin-left: 5px;
+                        margin-top: 6px;
+                    }
+                    dd span a img{
+                        display: block;
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                        display: none;
+                    }
+                    .img-list:nth-child(2n-1) dd{
+                        background: #333 !important;
+                    }
+                    .img-list:nth-child(2n-1) dd span a img.buy1{
+                        display: block;
+                    }
+                    .img-list:nth-child(2n) dd span a img.buy{
+                        display: block;
+                    }
+                    .img-list:nth-child(2n-1) dd h3{
+                        color:#fff;
+                    }
+                    .img-list:nth-child(2n-1) dd var{
+                        color:#fff !important;
+                    }
+                    
+                    .img-list:nth-child(2n) dd h3{
+                        color:#0E0E0E;
+                    }
+                    .img-list:nth-child(2n) dd var{
+                        color:#0E0E0E !important;
+                    }
+                     .img-list:hover dd var{
+                       color:#fff !important;
+                    }
+                     .img-list:nth-child(2n) dd span a{
+                        border-left:1px solid #0E0E0E;
+                    }
+                     .img-list:hover  dd span a{
+                        border-left:1px solid #fff;
+                    }
+                    .img-list:hover dd span a img.buy{
+                        display: none;
+                    }
+                    .img-list:hover  dd span a img.buy1{
+                        display: block;
+                    }
+                    .img-list:hover  dd h3{
+                        color:#fff;
+                    }
+                    .img-list:hover  dd var{
+                        color:#fff;
+                    }
+                </style>
+                <ul class="blocks-100 blocks-sm-2 blocks-md-3 blocks-xlg-4 no-space met-page-ajax" data-scale="0.90909090909091">
+                    <!--案例列表循环开始-->
+                    {volist name='experts' id='expert'}
+                    <li class="img-list ">
+                        <dl>
+                            <dt>
+                                <img src="{$expert.cover|get_uploads}" alt="{$expert.name}" style="">
+                                <a href="{:get_index('expert/detail',['product_id'=>$expert.product_id])}" title="{$expert.name}" target="_self"><i class="fa fa-link"></i></a>
+                                <button type="button" class="met-img-showbtn" data-imglist="{$expert.name}*{$expert.cover|get_uploads}"><i class="fa fa-search"></i></button>
+                            </dt>
+                            <dd>
+                                <h3 style="text-align: left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{$expert.name}</h3>
+                                <span>
+                                    <a title='立即预约' href="{:get_index('expert/detail',['product_id'=>$expert.product_id])}">
+                                        <img class="buy" src="__IMG__/buy.png" alt=""/>
+                                        <img class="buy1" src="__IMG__/buy1.png" alt=""/>
+                                    </a>
+                                    <var style="float: right;font-size: 14px;color:#fff;line-height: 32px;">￥{$expert.price}</var>
+                                    
+                                </span>
+                            </dd>
+                        </dl>
+                    </li>
+                    {/volist}
+                    <!--案例列表循环结束-->
+                </ul>
+                <!--分页-->
+                <div class="hidden-xs">
+                    <div class="met_pager">
+                        {for start="1" end="$pageCount+1" step="1" name="i"}
+                        <a {if $i == $Think.get.page}class="page-active"{/if} href="{:get_index('expert/index')}?page={$i}" class="thisclass">{$i}</a>
+                        {/for}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+{include file="./public/static/block/index/foot.html"}

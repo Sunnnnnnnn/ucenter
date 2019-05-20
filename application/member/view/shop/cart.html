@@ -1,0 +1,486 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+    <!-- 左侧边结束 -->
+<style>
+
+    @media screen and (min-width: 891px) {
+        .w-table-pc{display: block;}
+        .w-section-m{display: none;}
+    }
+    @media screen and (max-width: 890px) {
+        .w-table-pc{display: block;}
+        .w-section-m{display: none;}
+        .cc{float: none !important;}
+    }
+    @media screen and (max-width: 767px) {
+        .w-table-pc{display: none;}
+        .w-section-m{display: block;}
+    }
+
+
+</style>
+<script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+    </script>
+    <!-- 内容开始 -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3" align="center"><font size="+2"><b>我的购物车</b></font></h1>
+            </div>
+            <!--pc端 ipad端-->
+            <form class="w-table-pc" style="padding:10px 10px;" name="form1" method="post" action="">
+
+                <table width="100%" align="center" style="border:1px solid #ccc" cellpadding="3" cellspacing="1"
+                   class="table_striped table_hover ">
+
+                    <tbody class="w-tbody-pc">
+                        <style>
+                        .header{
+                            height:50px;
+                            border-bottom: 1px solid #ccc;
+                        }
+                        .w-cart-td{
+                            border-bottom: 1px solid #ccc;
+                        }
+                        .w-cart-td td{
+                            padding:5px 0;
+                            font-size: 14px;
+                        }
+                        .w-num span{
+                            width:28px;
+                            height:28px;
+                            border:1px solid #a9a9a9;
+                            cursor: pointer;
+                            display: block;
+                            float: left;
+                            line-height: 26px;
+                            text-align: center;
+                        }
+                        .w-num input{
+                            height:28px;
+                            text-align: center;
+                            display: block;
+                            float: left;
+                            border:1px solid #a9a9a9;
+                            border-left: none;
+                            border-right: none;
+                        }
+                        .w-price-total{
+                            height:50px;
+                            line-height: 50px;
+                            font-size: 16px;
+                        }
+                        .w-cart-btn a{
+                            padding: 5px 10px;
+                            color:#fff;
+                            background: red;
+                        }
+                        .w-cart-delete-btn input{
+                            display: block;
+                            float: left;
+                            margin-top: 11px;
+                            cursor: pointer;
+                        }
+                        .w-cart-delete-btn label{
+                            display: block;
+                            float: left;
+                            margin: 0 5px;
+                            cursor: pointer;
+                        }
+                        .w-cart-delete-btn span{
+                            display: block;
+                            float: left;
+                            cursor: pointer;
+                        }
+                        .w-btn a{
+                            display: block;
+                            float: left;
+                            height:35px;
+                            color:#fff;
+                            background: red;
+                            width:110px;
+                            text-align: center;
+
+                        }
+                    </style>
+                        <!--标题-->
+                        <tr class="header" bgcolor="#FFFFFF">
+                            <td width="5%">
+                                <div align="center">操作</div>
+                            </td>
+                            <td width="16%" height="23">
+                                <div align="center">图片</div>
+                            </td>
+                            <td width="24%">
+                                <div align="center">商品名称</div>
+                            </td>
+                            <td width="14%">
+                                <div align="center">市场价格</div>
+                            </td>
+                            <td width="14%">
+                                <div align="center">优惠价格</div>
+                            </td>
+                            <td width="13%">
+                                <div align="center">数量</div>
+                            </td>
+                            <td width="14%">
+                                <div align="center">小计</div>
+                            </td>
+
+                        </tr>
+                        <!--产品-->
+                        <!--循环产品 开始-->
+                        {volist name='cart' id='item'}
+                        <tr data-id='{$item.cart_id}' class="w-cart-td" bgcolor="#FFFFFF">
+                            <td align="center">
+                                <input class="click-checkbox" checked type="checkbox" name="del[]" value="7,34|">
+                            </td>
+                            <td align="center">
+                                <a href="javascript:;" target="_blank"><img
+                                    src="{$item.thumb_cover|get_uploads}" border="0" width="80"
+                                    height="80">
+                                </a>
+                            </td>
+                            <td align="center">
+                                <a href="javascript:;" class="pro-name" target="_blank">{$item.product_name}</a>
+                            </td>
+                            <td align="center"><s>￥{$item.price}</s></td>
+                            <td class="w-price-s" align="center">￥<b>{$item.price * $user.discount}</b></td>
+                            <td align="center" class="w-num">
+                                <div style="height:auto;margin: auto;overflow: hidden;width:98px;">
+                                    <span class="p-jian">-</span>
+                                    <input class="p-num" type="text" name="num[]" value="{$item.count}" size="4">
+                                    <span class="p-jia">+</span>
+                                </div>
+                            </td>
+                            <td class="w-price-sj" align="center">￥<span>{$item.price * $item.count * $user.discount}</span></td>
+
+                        </tr>
+
+                        {/volist}
+                        <!--循环产品 结束-->
+                        <!--价格总数-->
+                        <tr class="w-price-total" bgcolor="#FFFFFF">
+                            <td style="padding:30px 10px;" colspan="7">
+                                <div style="height:35px;line-height:35px;" class="">
+                                    <div class="w-cart-delete-btn" style="float: left">
+                                        <input checked id="aa" type="checkbox" value=""/>
+                                        <label for="aa">全部</label>
+                                        <span class="w-delete-p">删除</span>
+                                    </div>
+                                    <div class="" style="float: right;overflow: hidden;">
+                                        <span class="cc" style="float: left;display: block;">
+                                            <var style="display: block;float: left;font-style: normal;">
+                                                共计<i class="w-pro-sum-total" style="padding:0 5px;font-style: normal;color:#e7691e;">0</i>
+                                                件商品&nbsp;&nbsp;&nbsp;合计（<i style="font-style: normal;">含运费</i>）：
+                                            </var>
+                                            <i style="display:block;float:left;font-style: normal;color:#e7691e;font-size: 24px;">
+                                                ￥<em class="w-price-total1" style="font-style: normal">
+                                                0.00</em>
+                                            </i>
+                                        </span>
+                                        <div class="w-btn" style="float: right;overflow: hidden;margin-left: 15px;">
+                                            <a href="{:get_index('product')}">继续购物</a>
+                                            <a class="click-cart" style="background: #23b7e5" href="javascript:;">结算</a>
+                                            <!-- {:get_member('shop/cartpay')} -->
+                                            <!-- http://ucenter.znc365.com/member.php/shop/addorder -->
+                                        </div>
+                                        <script type="text/javascript">
+                                            var cart_c1=$('.w-cart-td');
+                                            $('.click-cart').on('click',function(){
+                                                var arr=[];
+                                                for(var i=0;i<cart_c1.length;i++){
+                                                    
+                                                    if(cart_c1.eq(i).find('.click-checkbox').prop('checked')){
+                                                        arr.push(cart_c1.eq(i).attr('data-id'));
+                                                    }
+                                                      
+                                                }
+                                                if(arr.length>0){
+                                                   var obj={'cart_id':arr,'type':0};
+                                                   console.log(obj);
+                                                    $.ajax({
+                                                        url:'http://ucenter.znc365.com/member.php/shop/addorder',
+                                                        type:'POST',
+                                                        data:obj,
+                                                        success:function(data){
+                                                            if(data.code==200){
+                                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                                            }else{
+                                                                alert(data.message);
+                                                            }
+                                                        }
+                                                    }) 
+                                                }else{
+                                                    alert('购物车不能为空!')
+                                                }  
+
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    </tbody>
+                </table>
+
+            </form>
+            <!--手机端-->
+            <form class="w-section-m">
+                <style>
+                    .w-pro-list ul{
+                        padding:0;
+                    }
+                    .w-pro-list ul li{
+                        height:auto;
+                        background: #fff;
+                        margin-bottom: 10px;
+                        padding:10px;
+                    }
+                    .w-pro-list ul li >p{
+                        border-bottom: 1px solid #dee5e7;
+                        height:30px;
+                        line-height: 30px;
+                        padding:0 5px;
+                    }
+                    .w-pro-list ul li > p span{
+                        display: block;
+                        float: left;
+                    }
+                    .w-pro-details{
+                        height:1.6rem;
+                        overflow: hidden;
+                    }
+                    .w-select-btn{
+                        display: block;
+                        float: left;
+                        width:.32rem;
+                        height:.32rem;
+                        margin: .64rem .2rem 0 .2rem !important;
+                    }
+                    .w-pro-details>div.w-pro-info{
+                        float: left;
+                        width:4rem;
+                        overflow: hidden;
+                        height:auto;
+                    }
+                    .w-pro-details>div.w-pro-info img{
+                        display: block;
+                        float: left;
+                        width:1.6rem;
+                        height:1.6rem;
+                    }
+                    .w-pro-details>div.w-pro-info p{
+                        width:2.2rem;
+                        height:.8rem;
+                        line-height: .4rem;
+                        font-size: .24rem;
+                        float: right;
+                        overflow: hidden;
+                        margin-bottom: 0;
+                    }
+                    .w-pro-details>div.w-pro-info var{
+                        float: right;width:2.2rem;display: block;height:.8rem;
+                        overflow: hidden;
+                        font-style:normal;
+                        padding-top:.2rem;
+                    }
+                    .w-pro-details>div.w-pro-info var span{
+                        display: block;
+                        float: left;
+                        width:.5rem;
+                        height:.5rem;
+                        text-align: center;
+                        line-height: .4rem;
+                        border:1px solid #ccc;
+                    }
+                    .w-pro-details>div.w-pro-info var input{
+                        display: block;
+                        float: left;
+                        width:.9rem;
+                        height:.5rem;
+                        border:1px solid #ccc;
+                        border-left: none;
+                        border-right: none;
+                        text-align: center;
+                    }
+                    .w-pro-price{
+                        float: right;
+                        height:1.6rem;
+                        width:2.2rem;
+                        text-align: center;
+                    }
+                    .w-pro-price span{
+                        color:#000;
+                        display: block;
+                    }
+                    .w-pro-price s{
+                        color:#666;
+                        display: block;
+                    }
+                    .w-pro-price var{
+                        display: block;
+                        font-style: normal;
+                        font-size: 14px;
+                        color:#000;
+                        font-weight: bold;
+                    }
+                    .w-pro-price var i{
+                        font-style: normal;
+                    }
+                    .w-pro-bottom{
+                        border-top:1px solid #dee5e7;
+                        margin-top: 10px;
+                    }
+                    .w-pro-bottom span{
+                        display: block;
+                        height:.8rem;
+                        line-height: .8rem;
+                        text-align: right;
+                    }
+                    .w-pro-bottom span var{
+                        font-style: normal;
+                        font-size: 18px;
+                        color:#000;
+                    }
+                    .w-pro-bottom span i{
+                        font-style: normal;
+
+                    }
+                    .w-pro-start{
+                        margin-top: 10px;
+                        background: #fff;
+                        padding:10px;
+                        height:1rem;
+                        line-height: .6rem;
+                    }
+                    .w-pro-start>div{
+                        height:auto;
+                        overflow: hidden;
+                    }
+                    .w-pro-start>div input {
+                        display: block;
+                        width: .32rem;
+                        height: .32rem;
+                        float: left;
+                        margin: .14rem .1rem 0 0 !important;
+                    }
+                    .w-pro-start>div label{
+                        float: left;
+                    }
+                    .w-pro-start>div div{
+                        float: right;
+                    }
+                    .w-pro-start>div div p{
+                        margin: 0;
+                        float: left;
+                        padding-right: .2rem;
+                    }
+                    .w-pro-start>div div a{
+                        display: block;
+                        float: right;
+                        background: #23b7e5;
+                        color:#fff;
+                        text-align: center;
+                        padding:0 .3rem;
+                        font-size:.32rem;
+                    }
+                </style>
+                <section style="margin-top: 10px;" class="">
+                    <div class="w-pro-list">
+                        <ul class="w-cart-pro-s">
+                            {volist name='cart' id='item'}
+                            <li data-id='{$item.cart_id}'>
+                                <p>
+                                    <span class="w-delete-pro-s">编辑</span>
+                                    <var class="w-delete-wc-s" style="float: right;font-style: normal;display: none;">删除</var>
+                                </p>
+                                <div class="w-pro-details">
+                                    <input class="w-select-btn" checked type="checkbox" name=""/>
+                                    <div class="w-pro-info">
+                                        <img src="https://www.znc365.com/attachs/product/201808/20180824_4EDFE0EE3C4E5EB9C0AD40676C8D561D.jpg" alt=""/>
+                                        <p>{$item.product_name}</p>
+                                        <var style="">
+                                            <span class="w-jian-s">-</span>
+                                            <input class="w-num-s" type="text" value="{$item.count}"/>
+                                            <span class="w-jia-s">+</span>
+                                        </var>
+                                    </div>
+                                    <div class="w-pro-price">
+                                        <span>￥<i class="w-price-s" style="font-style: normal;">{$item.price * $user.discount}</i>/{$item.unit}</span>
+                                        <s>￥{$item.price}/{$item.unit}</s>
+                                        <var>x<i class="w-pro-num-s">1</i></var>
+                                    </div>
+                                </div>
+                                <div class="w-pro-bottom">
+                                    <span>
+                                        共计<i class="w-pro-total-s">{$item.count}</i> 件商品   合计： <var>￥
+                                        <i class="w-price-total-s" style="font-style: normal;">{$item.price * $item.count * $user.discount}</i>
+                                    </var>
+                                    </span>
+                                </div>
+                            </li>
+                            {/volist}
+                        </ul>
+                        <div class="w-pro-start">
+                            <div>
+                                <input checked type="checkbox" id="bb" name=""/>
+                                <label for="bb">全选</label>
+                                <div>
+                                    <p> 合计（含运费）：<span style="font-size: .32rem;color:#e7691e;">
+                                        ￥<i class="w-total-s-z" style="font-style: normal;">0.00</i>
+                                    </span></p>
+                                    <a class="click-cart-s" href="javascript:;">结算</a>
+                                </div>
+                                <script type="text/javascript">
+                                            var cart_c=$('.w-cart-pro-s').find('li');
+                                            $('.click-cart-s').on('click',function(){
+                                                var arr=[];
+                                                for(var i=0;i<cart_c.length;i++){
+                                                    
+                                                    if(cart_c.eq(i).find('.w-select-btn').prop('checked')){
+                                                        arr.push(cart_c.eq(i).attr('data-id'));
+                                                    }
+                                                      
+                                                }
+                                                if(arr.length>0){
+                                                    var obj={'cart_id':arr,'type':0};
+                                                    $.ajax({
+                                                        url:'http://ucenter.znc365.com/member.php/shop/addorder',
+                                                        type:'POST',
+                                                        data:obj,
+                                                        success:function(data){
+                                                            console.log(data)
+                                                            if(data.code==200){
+                                                                window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                                            }else{
+                                                                alert('服务器错误');
+                                                            }
+                                                        }
+                                                    })
+                                                }else{
+                                                    alert('购物车不能为空!')
+                                                }
+                                                
+
+                                            })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+    <script src="__JS__/index/cart.js"></script>
+
+
+    <!-- 内容结束 -->
+    <script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+    <!-- 底部开始 -->
+
+  {include file="./public/static/block/member/foot.html"}

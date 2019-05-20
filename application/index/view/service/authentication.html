@@ -1,0 +1,143 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+<!--内容部分-->
+<!--主体内容-->
+<style>
+    .window-cut1{
+        height:auto !important;
+    }
+    #foot{
+        position: fixed;
+        left:0;
+        bottom: 0;
+    }
+    .w-auth-content{
+        position: absolute;
+    }
+    @media screen and (max-width: 767px) {
+      .w-auth-content{
+        position: static;
+      }
+    }
+    
+</style>
+<div class="side-content index" data-original="">
+    <!--主体内容容器-->
+    <div class="">
+        <!--主体-->
+        <div class="window-cut window-cut1">
+            <!--第四页-->
+            <div class="window-bin swiper-lazy" data-hash="" data-background="__IMG__/1490598854.png">
+                <!--分类 搜索-->
+                <div class="subnav-box ">
+                    <ul class="subnav-cut">
+                        <li class="subnav-bin subnav-search">
+                            <a href="javascript:;"><b><i class="fa fa-search"></i></b></a>
+
+                            <form method="get" action="">
+                                <div class="form-group">
+                                    <div class="input-search">
+                                        <button type="submit" class="input-search-btn">
+                                            <i class="icon wb-search" aria-hidden="true"></i>
+                                        </button>
+                                        <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                        <style>
+                            .w-classify {
+                                position: absolute;
+                                left: 0;
+
+                                display: none;
+                            }
+
+                            .w-classify ul {
+                                margin-top: 1px;
+                                height: auto;
+                                background: #fff;
+                            }
+
+                            .w-classify ul li {
+                                padding: 0 10px;
+                            }
+
+                            .w-classify ul li:hover {
+                                background: #00c0ff;
+                            }
+
+                            .w-classify ul li a {
+                                padding: 10px 0;
+                                display: block;
+                                color: #555;
+                            }
+
+                            .w-classify ul li:hover a {
+                                color: #fff;
+                            }
+                        </style>
+                        <li class="w-rz" style="position: relative">
+                            <a href="{:get_index('service/detection')}"><b>检测</b></a>
+
+                            <div style="" class="w-classify">
+                                <ul>
+                                    {volist name='cates' id='cate'}
+                                    <li><a href="{:get_index('service/detection',['cate_id'=>$cate.cate_id])}">{$cate.name}</a></li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="subnav-bin">
+                            <a class='active' href="{:get_index('service/authentication')}"><b>认证</b></a>
+                        </li>
+                    </ul>
+                </div>
+                <script>
+                    var _li_h = $('.w-rz').height();
+                    $('.w-classify').css('top', _li_h + 'px');
+                    $('.w-rz').hover(function () {
+                        $('.w-classify').stop().fadeIn();
+                    }, function () {
+                        $('.w-classify').stop().fadeOut();
+                    });
+                </script>
+                <div class="window-back" data-title="产品检测认证">
+                    <div class="padding-box">
+                        <div class="title-box">
+                            <div class="title-name about-name">
+                                <strong>产品检测认证</strong>
+                                <span>AGRICULTURAL PRODUCT TESTIING AND CERTIFICATION</span>
+                            </div>
+                        </div>
+                        <div class="">
+                            <ul class="about-cut">
+                                <li style="overflow: hidden" class="about-bin">
+                                    <span class="left">
+                                      <a href="javascript:;" title="">
+                                          <img class="swiper-lazy" src="{$service.cover|get_uploads}">
+                                      </a>
+                                  </span>
+                                  <span style="" class="right">
+                                      <div style="margin: 20px 0;font-size:14px;height:auto;border-bottom: 1px dashed #8b8b8b;padding-bottom: 10px;height:auto;">
+                                          {$service.name}：{$service.spec}
+                                      </div>
+                                  </span>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+
+    var bin_margin_top = Math.ceil(($('.window-back').parent('.window-bin1').height() - $('.window-back').height()) / 2);
+    if (bin_margin_top > 0)$('.window-back').css('margin-top', bin_margin_top/2); else $('.window-back').removeAttr('style');
+
+
+</script>
+<div style="height:75px;"></div>
+{include file="./public/static/block/index/foot.html"}

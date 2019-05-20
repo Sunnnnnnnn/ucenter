@@ -1,0 +1,139 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+    <!-- 左侧边结束 -->
+    <!-- 内容开始 -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">控制面板</h1>
+            </div>
+            <div class="wrapper-md">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row row-sm text-center">
+                            <div class="col-lg-3 col-md-6">
+                                <a class="block panel padder-v item">
+                               
+                                    <div class="h1 text-info font-thin h1">{$user.level}</div>
+                                    <span class="text-muted text-xs">当前用户组</span>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <a class="block panel padder-v bg-primary item"
+                                   href="javascript:;">
+                                    <span class="text-white font-thin h1 block">0元</span>
+                                    <span class="text-muted text-xs">余额</span>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <a class="block panel padder-v bg-info item"
+                                   href="javascript:;">
+                <span class="text-white font-thin h1 block">{$user.point}
+                  个</span>
+                                    <span class="text-muted text-xs">积分</span>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <a class="block panel padder-v item" href="{:get_member('shop/order')}">
+                                    <div class="font-thin h1">我的订单</div>
+                                    <span class="text-muted text-xs">购物</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                 <style type="text/css">
+                            .w-member-new{
+                                height:auto;
+                            } 
+                             .w-member-new li{
+                                border-bottom: 1px dashed #ccc;
+                                padding:5px 5px;
+                                height:auto !important;
+                             }
+                              .w-member-new li:hover{
+                                background: #F0F3F4;
+                              }
+                            .w-member-new li a{
+                                overflow: hidden;
+                            } 
+                            .w-member-new li a span{
+                                display: block;
+                                float: left;
+                                padding-right: 10px;
+                            }
+                            .w-member-new li a p{
+                                margin: 0;
+                                padding: 0;
+                                float: left;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                width:80%;
+                            }
+                            .w-member-new li a var{
+                                font-style: normal;
+                                display: block;
+                                float: right;
+                                padding-left: 10px;
+                            }          
+                    </style>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> 最新公告</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <!--8个公告循环开始 -->
+                                     <ul class="w-member-new">
+                                        
+                                        {volist name='data.news' id='item'}
+                                        <li>
+                                            <a href="{:get_index('article/detail',['article_id'=>$item.article_id])}">
+                                                <p>{$item.title}</p>
+                                                <var>{$item.dateline|date='d-m-Y',###}</var>
+                                            </a>
+                                        </li>
+                                       {/volist}
+                                       
+                                    </ul>
+                                    <!--8个公告循环结束-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> 最新文章</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <!--8个文章循环开始 -->
+                                     <ul class="w-member-new">
+                                        {volist name='data.article' id='item'}
+                                        <li>
+                                            <a href="{:get_index('article/detail',['article_id'=>$item.article_id])}">
+                                                <p>{$item.title}</p>
+                                                <var>{$item.dateline|date='d-m-Y',###}</var>
+                                            </a>
+                                        </li>
+                                       {/volist}
+                                    </ul>
+                                    <!--8个文章循环结束-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- 内容结束 -->
+    <script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+    <!-- 底部开始 -->
+{include file="./public/static/block/member/foot.html"}

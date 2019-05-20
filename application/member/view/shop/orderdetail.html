@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<style>
+    *{margin:0;padding:0;}
+    var{font-style: normal}
+    ul,ol,li{list-style: none;}
+    body{
+        color:#000;
+    }
+    #table{margin:0 auto 20px;}
+    .tr1 td{overflow: hidden;padding:10px 5px;}
+    .tr2 td{background: #efefef;padding:10px 5px;}
+    .tr1 td strong{
+        display: block;
+        float: left;
+    }
+    .order-type td ul{
+        overflow: hidden;
+        padding:0 5px;
+    }
+    .order-type td ul li{
+        float: left;
+        padding:7px 0;
+        border-bottom: 1px solid #ccc;
+        overflow: hidden;
+    }
+    .order-type td ul li span{
+        display: block;
+        float: left;
+        width:100px;
+    }
+    .order-type td ul li var{
+        display: block;
+        float: left;
+        color:#999;
+        width:80%;
+        word-wrap:break-word;
+    }
+    .pro{
+        height:auto;
+    }
+    .pro ul li{
+        overflow: hidden;
+        padding:7px 0;
+        /*border-bottom: 1px solid #ccc;*/
+    }
+    .pro ul li > a{
+        display: block;
+        padding-bottom:10px;
+        color:#000;
+        text-decoration: none;
+        /*padding-left: 110px;*/
+    }
+    .pro ul li div{
+        height:auto;
+        overflow: hidden;
+    }
+    .pro ul li div img{
+        display: block;
+        float: left;
+        width:100px;
+        height:auto;
+    }
+    .pro ul li div p{
+        float: left;
+        padding-left: 10px;
+    }
+    .pro ul li div p span{
+        display: block;
+    }
+    /*pc端*/
+    @media screen and (min-width: 993px) {
+        .tr1 td strong:first-child {
+            width:61%;
+        }
+        .tr1 td strong:last-child {
+            width:39%;
+        }
+        .order-type td ul li{
+            width:50%;
+        }
+        .order-type td ul li var{
+            width:79%;
+        }
+    }
+    /*iPad*/
+    @media screen and (max-width: 992px){
+        .tr1 td strong:first-child {
+            width:61%;
+        }
+        .tr1 td strong:last-child {
+            width:39%;
+        }
+        .order-type td ul li{
+            width:50%;
+        }
+        .order-type td ul li var{
+            width:70%;
+        }
+    }
+    /*手机*/
+    @media screen and (max-width: 767px){
+        .tr1 td strong:first-child {
+            width:100%;
+            padding-bottom: 5px;
+        }
+        .tr1 td strong:last-child {
+            width:100%;
+        }
+        .order-type td ul li{
+            width:100%;
+        }
+        .order-type td ul li var{
+            width:70%;
+        }
+    }
+
+</style>
+
+<table id="table" width="98%" cellspacing="1" cellpadding="3" border="0" align="center">
+    <tbody>
+        <tr class="tr1">
+            <td>
+                <strong>订单号:{$order.order_id}</strong>
+                <strong>下单时间:{$order.dateline|date='Y-m-d H:i:s',###}</strong>
+            </td>
+        </tr>
+        <tr class="tr2">
+            <td colspan="2"><strong>商品信息</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table width="100%" cellspacing="1" cellpadding="3" border="0" align="center">
+                    <tbody>
+                        <tr class="header">
+                            <div class="pro">
+                                <ul>
+                                    <!---->
+                                    {volist name='order.products' id='product'}
+                                    <li>
+                                        <!-- <a href="{:get_index('product/detail',['product_id'=>$product.product_id])}"> -->
+                                        <a href="javascript:0;">
+                                        {$product.product_name}</a>
+                                        <div>
+                                            <img src="{$product.cover|get_uploads}" alt=""/>
+                                            <p>
+                                                <span>价格:￥{$product.price} 元</span>
+                                                <span>数量:{$product.count}</span>
+                                                <span>小计:￥{$product.price * $product.count} 元</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    {/volist}
+                                </ul>
+                                <div style="border-top: 1px solid #ccc;text-align: right;padding:7px 0;">
+                                    <span>合计:{$order.money} 元</span>
+                                </div>
+                            </div>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr class="tr2">
+            <td><strong>订单信息</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2" height="23">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr class="order-type">
+                            <td>
+                                <ul>
+                                    <li><span>订单号：</span><var>{$order.order_id}</var></li>
+                                    <li><span>订单状态：</span>
+                                    {if $order.paystatus==1|| $order.paystatus==3 || $order.paystatus==4}
+                                    <var>已付款</var>
+                                    {else}
+                                    <var>未付款<a target="_blank" style="color:red;text-decoration: none;padding-left: 10px;" href="{:get_member('shop/cartpay',['order_no' => $order.order_id])}">立即支付</a></var>
+                                    {/if}
+                                    </li>
+                                    <li><span>下单时间：</span><var>{$order.dateline|date='Y-m-d H:i:s',###}</var></li>
+                                    <li><span>商品总金额：</span>
+
+                                    
+                                    {if in_array($product.cate_id,$p_cate_ids)}
+                                        {if $user.discount}
+                                            <s>{$order.money} 元</s><var>{$order.money * $user.discount} 元</var>
+                                        {else}
+                                            <var>{$order.money} 元</var>
+                                        {/if}
+                                    {elseif in_array($product.cate_id,$s_cate_ids)}
+                                        {if $user_level>=3}
+                                        0
+                                        {else}
+                                        {$order.money}
+                                        {/if}
+                                    {elseif in_array($product.cate_id,$e_cate_ids)}
+                                        {if $user_level>=2}
+                                        0
+                                        {else}
+                                        {$order.money}
+                                        {/if}
+                                    {else}
+                                        {$order.money}
+
+                                    {/if}
+                                    </li>
+                                    <li><span>配送方式：</span><var>普通邮递</var></li>
+                                    <li><span>商品运费：</span><var>0.00 元</var></li>
+                                    <li><span>支付方式：</span><var>{if $order.paystatus == 0 || $order.paystatus == 1}线上支付{elseif $order.paystatus == 2 || $order.paystatus == 3}线下支付{elseif $order.paystatus == 4}积分兑换{/if}</var></li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr class="tr2">
+            <td><strong>收货人信息</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table width="100%%" cellspacing="1" cellpadding="3" border="0">
+                    <tbody>
+                        <tr class="order-type">
+                            <td>
+                                <ul>
+                                    <li><span>真实姓名：</span><var>{$order.field.realname}</var></li>
+                                    <li><span>固定电话：</span><var>{$order.field.telephone}</var></li>
+                                    <li><span>移动电话：</span><var>{$order.field.mobile}</var></li>
+                                    <li><span>联系邮箱：</span><var>{$order.field.mail}</var></li>
+                                    <li><span>联系地址：</span><var>{$order.field.address}</var></li>
+                                    <li><span>邮编：</span><var>{$order.field.addressnum}</var></li>
+                                    <li><span>备注：</span><var>{$order.field.note}</var></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

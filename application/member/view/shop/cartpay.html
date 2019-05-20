@@ -1,0 +1,446 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+<!-- 左侧边结束 -->
+<!-- 内容开始 -->
+     <link rel="stylesheet" href="__CSS__/index/style_shop.css" type="text/css">
+<div id="content" class="app-content" role="main">
+        <style>
+            .nm-row {
+                margin: 0 auto;
+                max-width: 1280px;
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+        </style>
+        <div style="padding:0 20px 60px 20px !important;" class="app-content-body ">
+            <div class="nm-page-overflow">
+                <!-- page wrapper -->
+                <div style="padding: 20px 0;" class="nm-page-wrap">
+                    <div class="nm-page-wrap-inner">
+                        <div class="nm-row">
+                            <div class="col-xs-12">
+                                <div id="post-8" class="post-8 page type-page status-publish hentry">
+                                    <div class="woocommerce">
+                                        <!--购物车调用开始-->
+                                        <form action="{:get_member('shop/pay',['order_no' => $order_no])}" method="post" name="myorder" id="myorder">
+                                            <div class="col2-set nm-validation-inline-notices" id="customer_details">
+                                                <div class="col-1">
+                                                    <style>
+                                                        .woocommerce-billing-fields>p{
+                                                            margin-bottom: 0 !important;
+                                                        }
+                                                        .woocommerce-billing-fields>p i{
+                                                            font-style: normal;
+                                                            padding-left: 5px;
+                                                            color:red;
+                                                        }
+                                                    </style>
+                                                    <div class="woocommerce-billing-fields">
+
+                                                        <h3>账单明细</h3>
+                                                        <input type="hidden" name="" value="{$order_no}">
+                                                        <p class="form-row form-row form-row-first validate-required"
+                                                           id="billing_first_name_field">
+                                                            <label class="">真实姓名<abbr class="required" title="required">*</abbr></label>
+                                                            <input class="input-text " name="realname" id="truename" placeholder="" value="{$address.realname}" type="text">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+
+                                                        <p class="form-row form-row form-row-last validate-required"
+                                                           id="billing_last_name_field">
+                                                            <label class="">固定电话<abbr class="required" title="required"></abbr></label>
+                                                            <input class="input-text " name="telephone" id="mycall" placeholder="区号-号码" value="{$address.telephone}" type="text">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+
+                                                        <div style="clear: both"></div>
+
+                                                        <p class="form-row form-row form-row-first validate-required validate-email"
+                                                           id="billing_email_field">
+                                                            <label class="">邮箱账号 <abbr class="required" title="required">*</abbr></label>
+                                                            <input class="input-text " name="mail" id="email" placeholder="" value="{$address.mail}" type="email">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+
+                                                        <p class="form-row form-row form-row-last validate-required validate-phone"
+                                                           id="billing_phone_field">
+                                                            <label class="">手机号码 <abbr class="required" title="required">*</abbr></label>
+                                                            <input class="input-text " name="mobile" id="phone" placeholder="" value="{$address.mobile}" type="tel">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+
+                                                        <div style="clear: both"></div>
+                                                        <p class="form-row form-row form-row-last validate-required validate-phone"
+                                                           id="billing_phone_field">
+                                                            <label class="">邮政编码 <abbr class="required" title="required">*</abbr></label>
+                                                            <input class="input-text " name="addressnum" id="zip" placeholder="" value="{$address.addressnum}" type="tel">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+
+                                                        <div style="clear: both"></div>
+
+                                                        <p class="form-row form-row form-row-wide address-field validate-required" id="billing_address_1_field">
+                                                            <label class="">收货地址<abbr class="required" title="required">*</abbr></label>
+                                                            <input class="input-text " name="address" id="address" placeholder="" value="{$address.address}" type="text">
+                                                            <span><i class="w-i"></i></span>
+                                                        </p>
+                                                            <p class="form-row form-row form-row-wide address-field validate-required" id="billing_address_1_field">
+                                                            <label class="">留言<abbr class="required" title="required"></abbr></label>
+                                                            <input class="input-text " name="note" id="" placeholder="" value="" type="text">
+                                                            
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <h3>订单号:{$order_no}
+                                                <input name="order_no" id="ddno" value="{$order_no}" type="hidden">
+                                            </h3>
+                                            <h3 id="order_review_heading">您选择的产品</h3>
+                                            <div id="order_review" class="woocommerce-checkout-review-order">
+                                                <table class="shop_table woocommerce-checkout-review-order-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="product-name">产品</th>
+                                                        <th class="product-total">统计</th>
+                                                    </tr>
+                                                    </thead>
+                                                    {volist name='order.orders' id='item'}
+                                                    <tbody>
+                                                        <tr class="cart_item">
+                                                        <td colspan="2">
+                                                            <div class="nm-checkout-product-wrap">
+                                                                <div class="nm-checkout-product-thumbnail">
+                                                                    <!-- <a href="{:get_index('product/detail',['product_id'=>$item.product_id])}" target="_blank"> -->
+                                                                    <a href="javascript:0;"><img src="{$item.cover|get_uploads}" sizes="(max-width: 102px) 100vw, 102px" width="102" height="127"> </a></div>
+                                                                <div class="nm-checkout-product-name product-name">
+                                                                    {$item.product_name} <strong
+                                                                        class="product-quantity">×
+                                                                    {$item.count}</strong></div>
+                                                                <div class="nm-checkout-product-total product-total">
+                                                        <span class="woocommerce-Price-amount amount"><span
+                                                                class="woocommerce-Price-currencySymbol">¥</span>{$item.price * $item.count}</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                    {/volist}
+
+                                                    <tfoot>
+                                                        <tr class="cart-subtotal">
+
+                                                        <th>总计</th>
+
+                                                        <td>
+                                                        {if in_array($item.cate_id,$p_cate_ids)}
+                                                            {if $user.discount}
+                                                            <s class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>{$order.money}</s>
+                                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>{$order.money *$user.discount}</span>
+                                                            {else}
+                                                                <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>{$order.money}</span>
+                                                            {/if}
+                                                        {elseif in_array($item.cate_id,$s_cate_ids)}
+
+                                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>
+                                                            {if $user_level>=3}
+                                                            0
+                                                            {else}
+                                                            {$order.money}
+                                                            {/if}</span>
+                                                        {elseif in_array($item.cate_id,$e_cate_ids)}
+
+                                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>
+                                                            {if $user_level>=2}
+                                                            0
+                                                            {else}
+                                                            {$order.money}
+                                                            {/if}</span>
+                                                        {else}
+                                                            <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">￥</span>{$order.money}</span>
+                                                        {/if}
+                                                        </td>
+
+                                                    </tr>
+                                                        <tr class="shipping">
+                                                            <td colspan="2" data-title="Shipping">
+                                                            <p class="nm-shipping-th-title">配送方式</p>
+                                                            <style>
+                                                                #shipping_method table tr td{
+                                                                    padding:10px 5px !important;
+                                                                    margin: 0;
+                                                                }
+                                                                #shipping_method table tr td input[type=radio]{
+                                                                    display: block;
+                                                                    float: left;
+                                                                    margin-top: 5px !important;
+                                                                    margin-right: 5px !important;
+                                                                }
+                                                                #shipping_method table tr td strong{
+                                                                    float: left;
+                                                                }
+                                                            </style>
+                                                            <ul id="shipping_method">
+                                                                <table width="100%" cellspacing="1" cellpadding="3"
+                                                                       border="0"
+                                                                       align="center">
+                                                                    <tbody>
+                                                                   <!--  <tr>
+                                                                        <td width="69%" height="23">
+                                                                            <input checked name="" value="1" type="radio">
+                                                                            <strong>物流配送</strong>
+                                                                        </td>
+                                                                        <td width="31%"><strong>费用:￥0.00</strong></td>
+                                                                    </tr> -->
+                                                                <tr>
+                                                                        <td colspan="2">
+                                                                            <table width="98%" cellspacing="1" cellpadding="3" border="0" align="right">
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td><p>客户自提</p></td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td width="40%" height="23">
+                                                                            <input checked="" name="paytype" value="1" type="radio"><strong>线下购买</strong>
+                                                                        </td>
+                                                                        <td width="60%"><strong>费用:￥
+                                                        {if in_array($item.cate_id,$p_cate_ids)}
+                                                            {if $user.discount}
+                                                                {$order.money *$user.discount}
+                                                            {else}
+                                                                {$order.money}
+                                                            {/if}
+                                                        {elseif in_array($item.cate_id,$s_cate_ids)}
+                                                            {if $user_level>=3}
+                                                            0
+                                                            {else}
+                                                            {$order.money}
+                                                            {/if}
+                                                        {elseif in_array($item.cate_id,$e_cate_ids)}
+                                                            {if $user_level>=2}
+                                                            0
+                                                            {else}
+                                                            {$order.money}
+                                                            {/if}
+                                                        {else}
+                                                            {$order.money}
+
+                                                        {/if}
+
+
+                                                                        </strong></td>
+                                                                    </tr>
+                                                                    
+                                                                    
+                                                                    {if in_array($item.cate_id,$s_cate_ids)}
+                                                                        <tr>
+                                                                            <td width="40%" height="23">
+                                                                                <input  name="paytype" value="2" type="radio"><strong>积分购买</strong>
+                                                                            </td>
+                                                                            <td width="60%"> <strong>需要{if $user_level>=3}
+                                                                            0
+                                                                            {else}
+                                                                            {$order.money * 10}
+                                                                            {/if}积分</strong></td>
+                                                                        </tr> 
+                                                                    {/if}
+                                                                    {if in_array($item.cate_id,$e_cate_ids)}
+                                                                        <tr>
+                                                                            <td width="40%" height="23">
+                                                                                <input  name="paytype" value="2" type="radio"><strong>积分购买</strong>
+                                                                            </td>
+                                                                            <td width="60%"> <strong>需要{if $user_level>=2}
+                                                                            0
+                                                                            {else}
+                                                                            {$order.money * 10}
+                                                                            {/if}积分</strong></td>
+                                                                        </tr> 
+                                                                    {/if}
+
+                                                                     <tr>
+                                                                        <td colspan="2">
+                                                                            <table width="98%" cellspacing="1" cellpadding="3" border="0" align="right">
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td><p align="right">当前积分:{$user.point}</p></td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </ul>
+                                                        </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <div id="payment" class="woocommerce-checkout-payment">
+                                                <!--     <ul class="wc_payment_methods payment_methods methods">
+                                                        <li style="">
+                                                            <a style="float: none;background: #0d7308;display: block;text-align: center"
+                                                               href="javascript:;" onclick="alert('暂未开通!')"><img src="__IMG__/w-wx-pay.png" alt=""/></a>
+                                                        </li>
+                                                    </ul> -->
+
+                                                    <div class="form-row place-order">
+                                                        <style>
+                                                            .button, input[type=button] {
+                                                                display: inline-block;
+                                                                font-size: 16px;
+                                                                line-height: 16px;
+                                                                color: #fff;
+                                                                padding: 9px 15px 10px;
+                                                                border: 0 none;
+                                                                -webkit-border-radius: 0;
+                                                                -moz-border-radius: 0;
+                                                                border-radius: 0;
+                                                                text-align: center;
+                                                                opacity: 1;
+                                                                -webkit-transition: opacity 0.2s ease;
+                                                                -moz-transition: opacity 0.2s ease;
+                                                                -o-transition: opacity 0.2s ease;
+                                                                transition: opacity 0.2s ease;
+                                                                background-color: #282828;
+                                                            }
+                                                        </style>
+                                                        <span style="float: right;">
+                                                            <input class="button alt"  id="alltotal" value="立即结算" type="submit">
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                        </form>
+
+                                        <script>
+                                            //验证姓名
+                                            $('#truename').blur(function(){
+                                                var _val=$(this).val();
+                                                if($.trim(_val)==''){
+                                                    $(this).parent().find('i').text('不能为空');
+                                                    return false;
+                                                }else{
+                                                    return true;
+                                                }
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //验证固定电话
+                                            $('#mycall').blur(function(){
+                                                var _val=$(this).val();
+                                                var reg= /^(([0-9]\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+                                                if($.trim(_val)!=''){
+                                                    if(!reg.test(_val)){
+                                                        $(this).parent().find('i').text('固定电话号码不正确');
+                                                    }else{
+                                                        return true;
+                                                    }
+                                                }
+                                                
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //验证邮箱
+                                            $('#email').blur(function(){
+                                                var _val=$(this).val();
+                                                var reg= /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+$/;
+                                                if($.trim(_val)==''){
+                                                    $(this).parent().find('i').text('不能为空');
+                                                    return false;
+                                                }if(!reg.test(_val)){
+                                                    $(this).parent().find('i').text('邮箱不正确');
+                                                }else{
+                                                    return true;
+                                                }
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //验证手机号码
+                                            $('#phone').blur(function(){
+                                                var _val=$(this).val();
+                                                var reg= /^1(3|4|5|7|8)\d{9}$/;
+                                                if($.trim(_val)==''){
+                                                    $(this).parent().find('i').text('不能为空');
+                                                    return false;
+                                                }if(!reg.test(_val)){
+                                                    $(this).parent().find('i').text('手机号码不正确');
+                                                }else{
+                                                    return true;
+                                                }
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //验证邮编
+                                            $('#zip').blur(function(){
+                                                var _val=$(this).val();
+                                                var reg= /^[0-9][0-9]{5}$/;
+                                                if($.trim(_val)==''){
+                                                    $(this).parent().find('i').text('不能为空');
+                                                    return false;
+                                                }if(!reg.test(_val)){
+                                                    $(this).parent().find('i').text('邮编不正确');
+                                                }else{
+                                                    return true;
+                                                }
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //验证收货地址
+                                            $('#address').blur(function(){
+                                                var _val=$(this).val();
+                                                if($.trim(_val)==''){
+                                                    $(this).parent().find('i').text('不能为空');
+                                                    return false;
+                                                }else{
+                                                    return true;
+                                                }
+                                            }).focus(function(){
+                                                $(this).parent().find('i').text('');
+                                            });
+                                            //提交数据
+                                            $('#alltotal').on('click',function(){
+                                                $('#address').blur();
+                                                $('#zip').blur();
+                                                $('#phone').blur();
+                                                $('#email').blur();
+                                                $('#mycall').blur();
+                                                $('#truename').blur();
+                                                if($('.w-i').text()==''){
+                                                    return true;
+                                                }else{
+                                                    $('body,html').stop().animate({
+                                                        "scrollTop": 0
+                                                    }, 100);
+                                                }
+                                                return false;
+                                            });
+                                        </script>
+                                        <!--购物车调用结束-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 内容结束 -->
+    <script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+<!-- 底部开始 -->
+{include file="./public/static/block/member/foot.html"}

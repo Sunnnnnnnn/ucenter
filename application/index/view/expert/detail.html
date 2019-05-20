@@ -1,0 +1,268 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+
+<!--内容-->
+<div class="side-content " data-original="http://photo.lehur.com/1490694537.jpg">
+    <!--搜索框 分类导航-->
+    <div class="subnav-box ">
+        <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a><b><i class="fa fa-search"></i></b></a>
+
+                <form method="get" action="">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn"><i class="icon wb-search"
+                              aria-hidden="true"></i></button>
+                              <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                          </div>
+                      </div>
+                  </form>
+
+              </li>
+                <li class="subnav-bin subnav-search">
+                <style>
+                    .input-search1:before{
+                        border-color: transparent transparent #fff transparent !important;
+                    }
+                    .aa select{
+                        cursor: pointer;
+                        padding: 5px 10px;
+                        outline: none;
+                        font-size: 14px;
+                        color: #000;
+                        border: none;
+                        border: 1px solid #A0A0A0;
+                        border-right: none;
+                        display: block;
+                        float: left;
+                    }
+                    .aa select:last-child{
+                        border-right: 1px solid #A0A0A0;
+                    }
+                </style>
+                <a><b><i style="color:#555;font-weight:bold;" class="icon iconfont icon-down"></i></b></a>
+                <form class="input-search1" method="get" action="">
+                    <div class="form-group">
+                        <div style="background: #fff;width:318px;" class="">
+                            <div style="padding:5px 10px;overflow: hidden;" class="aa">
+                                <select name="expertise" id='expert_cate_select'>
+                                    <option value="0">专家特长</option>
+                                    {volist name='cates' id='cate'}
+                                      <option class="subnav-bin" value="{$cate.cate_id}"><b>{$cate.name}</b></option>
+                                     {/volist}
+                                </select>
+                                <!-- <select name="mechanism">
+                                    <option value="">所在机构</option>
+                                </select> -->
+                                <select id="expert_province_select">
+                                    <option value="">所在地区</option>
+                                    {volist name='provinces' id='province'}
+                                      <option class="subnav-bin" value="{$province.province_id}"><b>{$province.province_name}</b></option>
+                                     {/volist}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </li>
+
+            <script type="text/javascript">
+                $('#expert_cate_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?cate_id='+_val
+                    var p = '{$Think.get.province_id ? $Think.get.province_id :0}';
+                    if (p != false) {
+                        temp = temp+'&province_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+                $('#expert_province_select').change(function(){
+                    var _val=$(this).find('option:selected').val();
+                    var temp = '?province_id='+_val
+                    var p = '{$Think.get.cate_id ? $Think.get.cate_id :0}';
+                    if (p != false) {
+                        temp = temp+'&cate_id='+p;
+                    }
+                    window.location.href="/index.php/expert/index"+temp;
+                });
+
+            </script>
+
+
+
+              <li class="subnav-bin"><a class="active" href="{:get_index('expert/index')}"><b>专家列表</b></a></li>
+            <li class="subnav-bin">
+                <a href="{:get_index('expert/map')}" class='maphide'><b>专家地图</b></a>
+            </li>
+        </ul>
+    </div>
+    <!--内容详情-->
+    <div class="page met-showproduct pagetype1 animsition">
+        <div class="met-showproduct-head">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="met-showproduct-list fnGallery text-center slick-dotted" id="met-imgs-carousel">
+                            <div class="slick-slide lg-item-box"
+                                 data-src="{$expert.cover|get_uploads}"
+                                 data-exthumbimage="{$expert.cover|get_uploads}">
+                            <span>
+                                <img src="{$expert.cover|get_uploads}"
+                                     class="img-responsive"
+                                     alt="Arumjigi modern tea cup">
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                      <style>
+                        .dd1{border-bottom: 1px dashed #ccc;line-height: 29px;}
+                    </style>
+                    <div class="col-md-5 product-intro">
+                        <h1>{$expert.name}</h1>
+
+                        <p>
+                        </p>
+                        <dd style="color:black; font-size: 22px;">￥：{$expert.price}元</dd>
+                        <p></p>
+                        {volist name='expert.spec' id='s'}
+                        <dd class="dd1">{$s}</dd>
+                        {/volist}
+                        <br>
+
+                        <div class="w-shopping-cart">
+                            <form action="" method="">
+                                
+
+                                <div class="w-shop-btn">
+                                    <a class="w-shop-btn1" href="javascript:a({$expert.product_id})">立即预约</a>
+<!--                                     <a class="w-shop-btn2" href="javascript:;">加入收藏</a>
+ -->                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <script>
+            $('.w-num').blur(function () {
+                if ($(this).val() == '') {
+                    $(this).val('0');
+                }
+            })
+            $('.jian').on('click', function () {
+                var val1 = $('.w-num').val();
+                if (val1 > 0) {
+                    val1--;
+                    $('.w-num').val(val1)
+                }
+
+            });
+            $('.jia').on('click', function () {
+                var val1 = $('.w-num').val();
+                val1++;
+                $('.w-num').val(val1)
+            });
+        </script>
+        <div class="met-showproduct-body">
+            <div class="container">
+                <div class="row no-space">
+                    <div style="height:auto;" class="col-md-9 product-content-body">
+                        <div class="row">
+                            <div class="panel product-detail">
+                                <div class="panel-body">
+                                    <ul class="nav nav-tabs nav-tabs-line met-showproduct-navtabs affix-nav">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="javascript:;"
+                                               data-get="product-details">详细信息</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane met-editor lazyload clearfix animation-fade active"
+                                             id="product-details">
+                                            <div>
+                                                <p>{$expert.desc}<br></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--右侧开始 热门推荐-->
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="panel product-hot">
+                                <div class="panel-body">
+                                    <h4 class="example-title">热门推荐</h4>
+                                    <ul class="blocks-2 blocks-sm-3 mob-masonry" data-scale="1">
+                                        {volist name='hots' id='hot'}
+                                        <li>
+                                            <a href="{:get_index('expert/detail',['product_id'=>$hot.product_id])}"
+                                               target="_blank" class="img" title="{$hot.name}">
+                                                <img data-original="{$hot.cover|get_uploads}"
+                                                     class="cover-image" style="height:200px;" alt="{$hot.name}">
+                                            </a>
+                                            <a href="javascript:;"
+                                               target="_blank" class="txt" title="{$hot.name}">{$hot.name}</a>
+                                        </li>
+                                        {/volist}
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--右侧结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function a(product_id){
+            var obj={'product_id':product_id};
+            $.ajax({
+                url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                type:'GET',
+                async:false,
+                data:'',
+                success:function(data){
+                    if(data.code==200){
+                        if(data.data==0){
+                            alert('你还没有登录,请先登录!');
+                             $('.w-yn-login-mash').fadeIn();
+                             $('.w-login').show();
+                             $('.pp').val('1');
+                        }else if (data.data==1) {
+                             $.ajax({
+                                url:'http://ucenter.znc365.com/member.php/shop/addOrderByProductId',
+                                type:'POST',
+                                data:obj,
+                                success:function(data){
+                                    console.log(data)
+                                    if(data.code==200){
+                                        window.location.href="http://ucenter.znc365.com/member.php/shop/cartpay?order_no="+data.data;
+                                    }else{
+                                        alert(data.message);
+                                    }
+                                },error:function(){
+                                    alert("服务器错误,请稍后再试!");
+                                }
+                            })
+                            
+                        }
+                    }else{
+                        alert('获取登录状态失败!')
+                    }
+                }
+            })
+        }
+        
+    </script>
+    <!--底部-->
+ {include file="./public/static/block/index/foot.html"}

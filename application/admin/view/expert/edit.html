@@ -1,0 +1,125 @@
+{include file="./public/static/block/admin/head.html"}
+{include file="./public/static/block/admin/nav.html"}
+<!--/. NAV TOP  -->
+{include file="./public/static/block/admin/leftNav.html"}
+<script src="/public/static/js/editor/kindeditor-all-min.js"></script>
+<script src="/public/static/js/editor/lang/zh-CN.js"></script>
+<!-- /. NAV SIDE  -->
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    专家信息编辑 <small>用于专家信息修改</small>
+                </h1>
+
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Expert Edit
+            </div>
+            <div class="panel-body">
+            <style type="text/css">
+                ul,ol,li{
+                    list-style: none;
+                }
+                tbody tr{
+                    border-bottom:1px solid #ccc;
+
+                }
+                 tbody tr:hover{
+                    background: #E6E6E6;
+                 }
+                 tbody tr.tr1:hover{
+                    background:#fff;
+                 }
+                 tbody tr th{
+                    text-align: center;
+                 }
+                tbody tr td{
+                      padding:10px 0;
+                }
+                tbody tr td input[type=text]{
+                    padding:3px 5px;
+                    border:none;
+                    outline: none;
+                    border:1px solid #ccc;
+                }
+                tbody tr td select{
+                    padding:3px 5px;
+                    border:none;
+                    outline: none;
+                    border:1px solid #ccc;
+                    margin-right:5px;
+                }
+                tbody tr td img{
+                    width:150px;
+                    margin-top: 10px;
+                }
+            
+                .bt-big{
+                    outline: none;
+                    border:none;
+                    color:#fff;
+                    background: #32C2CD;
+                    padding:8px 20px;
+                    font-size: 16px;
+                }
+            </style>
+                <form action="{:url('expert/edit',['product_id'=>$expert.product_id])}" method="post" enctype="multipart/form-data">
+                    <table width="100%" border="0" cellspacing="0" class="table-data form">
+                        <tbody>
+                            <tr><th>标题:</th><td><input type="text" name="name" value="{$expert.name}" class="input w-300"></td></tr>
+                            <tr><th>封面图:</th><td><input type="file" name="cover" ><img src="{$expert.cover|get_img_url}"></td></tr>
+                            <tr><th>省份:</th><td><select name='province_id'>
+                            {volist name='provinces' id='province'}
+                            <option value="{$province.province_id}" {if $expert.province_id==$province.province_id}selected=""{/if}>{$province.province_name}</option>
+                            {/volist}
+                            </select></td></tr>
+                            <tr><th>专家分类:</th><td>
+                            <select name="cate_id">
+                                {volist name='cates' id='cate'}
+                                <option value="{$cate.cate_id}" {if $expert.cate_id==$cate.cate_id}selected="selected"{/if}>{$cate.name}</option>
+                                {/volist}
+                            </select>
+                            </td></tr>
+                            <tr><th>属性:</th><td><input type="text" name="spec" value="{$expert.spec}" class="input w-300"><span style="color: red">注:不同属性用";"隔开,如:技能：插花;熟练度：熟练 </span> </td></tr>
+
+                            <tr><th>地区:</th><td><input type="text" name="region" value="{$expert.region}" class="input w-300"></td></tr>
+                            <tr><th>价格:</th><td><input type="text" name="price" value="{$expert.price}" class="input w-300"></td></tr>
+                            <tr><th>描述:</th><td>
+
+                            <textarea id="editor_id" name="desc" style="width:700px;height:300px;">{$expert.desc}</textarea>
+                            
+                            </td></tr>
+                            <tr class="tr1"><th class="clear-th-bottom"></th><td class="clear-td-bottom" colspan="10"><input type="submit" class="bt-big" value="提交数据"></td></tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('#editor_id', {
+            resizeType: 1,
+            allowPreviewEmoticons: false,
+            allowImageUpload: false,
+            items: [
+            'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+    'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+    'anchor', 'link', 'unlink', '|', 'about']
+        });
+
+    });
+</script>
+<!-- /. PAGE WRAPPER  -->
+{include file="./public/static/block/admin/foot.html"}

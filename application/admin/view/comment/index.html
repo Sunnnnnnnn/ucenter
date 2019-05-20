@@ -1,0 +1,110 @@
+{include file="./public/static/block/admin/head.html"}
+{include file="./public/static/block/admin/nav.html"}
+<!--/. NAV TOP  -->
+{include file="./public/static/block/admin/leftNav.html"}
+<!-- /. NAV SIDE  -->
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    用户评论管理 <small>用于管理用户评论</small>
+                </h1>
+
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               评论列表
+               <!-- <div style="float: right;padding-top:5px;"><a style="padding: 5px 20px;background: #32C2CD;color: #fff;border-radius: 5px;" href="{:url('comment/add')}">新增用户文章</a></div> -->
+           </div>
+           
+            <div style="clear: none;padding:0 15px 15px 15px;overflow: hidden;">
+                审核筛选:
+                <select style="padding: 3px 10px;outline: none;border: none;border: 1px solid #ccc;" name='comment_id' id='comment_select'>
+                    <option value="" {if $closed===''}selected=''{/if}>全部</option>
+                    <option value="2" {if $closed==='2'}selected=''{/if}>审核中</option>
+                    <option value="0" {if $closed==='0'}selected=''{/if}>审核通过</option>
+                </select>
+                <script type="text/javascript">
+                    $('#comment_select').change(function(){
+                        var _val=$(this).find('option:selected').val();
+                        window.location.href="/admin.php/comment/index/closed/"+_val+".html";
+                    });
+                </script>
+            </div>
+        <div class="panel-body">
+           <div class="table-responsive" style="overflow: hidden;">
+           <style type="text/css">
+            thead tr th{
+                text-align: center;
+            }
+            tbody tr td{
+                vertical-align: middle !important;
+                text-align: center;
+             }
+             tbody tr td img{
+                width:150px !important;
+             }
+         </style>
+            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">文章ID</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">用户ID</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">文章ID</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">内容</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">文章状态</th>
+
+
+                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 88px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name='list' id='comment'}
+                    <tr class="gradeA odd">
+                        <td class="sorting_1">{$comment.comment_id}</td>
+                        <td class="sorting_1"><a href="{:get_admin('user/edit',['uid'=>$comment.uid])}"> {$comment.uid}</a></td>
+                        <td class="sorting_1"><a href="{:get_admin('news/edit',['news_id'=>$comment.news_id])}"> {$comment.news_id}</a></td>
+                        <td class="sorting_1">{$comment.content}</td>
+                        <td class="sorting_1">{if $comment.closed == 0}审核通过{elseif $comment.closed==2}审核中{/if}</td>
+                        <td class="center ">
+                            <div style="width:125px;text-align: center;margin: auto;">
+                                <a href="{:url('comment/setClosed',['comment_id'=>$comment.comment_id])}">审核</a> |
+                                <a href="{:url('comment/delete',['comment_id'=>$comment.comment_id])}">删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+            <div style="height: 54px">
+                <div style="margin: 20px 0;border-radius: 4px;float: right;line-height: 34px;padding-left: 20px;">共{$total}条数据</div>
+                <style type="text/css">
+                    .pagination{
+                        float: right;
+                    }
+                </style>
+                {$list->render()} 
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+</div>
+
+</div>
+<!-- /. PAGE WRAPPER  -->
+
+
+
+
+
+
+{include file="./public/static/block/admin/foot.html"}

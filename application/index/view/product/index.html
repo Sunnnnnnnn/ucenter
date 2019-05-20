@@ -1,0 +1,145 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+
+<!--内容-->
+<div class="side-content " data-original="">
+    <!--搜索框 分类导航-->
+    <div class="subnav-box ">
+        <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a><b><i class="fa fa-search"></i></b></a>
+
+                <form method="get" action="">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn"><i class="icon wb-search"
+                              aria-hidden="true"></i></button>
+                              <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                          </div>
+                      </div>
+                  </form>
+
+              </li>
+              {volist name='cates' id='cate'}
+              <li class="subnav-bin"><a {if $cate_id==$cate.cate_id}class="active"{/if} href='{:get_index("product/index",["cate_id"=>$cate.cate_id])}'><b>{$cate.name}</b></a></li>
+             {/volist}
+        </ul>
+    </div>
+    <!--内容详情-->
+    <div class="met-img animsition imgs0">
+        <div class="container-fluid">
+            <div style="margin: auto;" class="row">
+               <style>
+
+                    dd h3{
+                        float: left;
+                        width:60%;
+                        line-height: 32px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    dd span{
+                        float: right;
+                        width:40%;
+                    }
+                    dd span a{
+                        border-left:1px solid #fff;
+                        float: right;color:#fff;font-size:14px;
+                        display: block;
+                        height:20px;
+                        margin-left: 5px;
+                        margin-top: 6px;
+                    }
+                    dd span a img{
+                        display: block;
+                        width: 20px;
+                        height: 20px;
+                        margin-left: 5px;
+                        display: none;
+                    }
+                    .img-list:nth-child(2n-1) dd{
+                        background: #333 !important;
+                    }
+                    .img-list:nth-child(2n-1) dd span a img.buy1{
+                        display: block;
+                    }
+                    .img-list:nth-child(2n) dd span a img.buy{
+                        display: block;
+                    }
+                    .img-list:nth-child(2n-1) dd h3{
+                        color:#fff;
+                    }
+                    .img-list:nth-child(2n-1) dd var{
+                        color:#fff !important;
+                    }
+                   
+                    .img-list:nth-child(2n) dd h3{
+                        color:#0E0E0E;
+                    }
+                    .img-list:nth-child(2n) dd var{
+                        color:#0E0E0E !important;
+                    }
+                     .img-list:hover dd var{
+                       color:#fff !important;
+                    }
+                     .img-list:nth-child(2n) dd span a{
+                        border-left:1px solid #0E0E0E;
+                    }
+                     .img-list:hover  dd span a{
+                        border-left:1px solid #fff;
+                    }
+                    .img-list:hover dd span a img.buy{
+                        display: none;
+                    }
+                    .img-list:hover  dd span a img.buy1{
+                        display: block;
+                    }
+                    .img-list:hover  dd h3{
+                        color:#fff;
+                    }
+                    .img-list:hover  dd var{
+                        color:#fff;
+                    }
+                </style>
+                <ul class="blocks-100 blocks-sm-2 blocks-md-3 blocks-xlg-4 no-space met-page-ajax" data-scale="0.90909090909091">
+                    <!--案例列表循环开始-->
+                    {volist name='products' id='product'}
+                    <li class="img-list ">
+                        <dl>
+                            <dt>
+                                <img src="{$product.cover|get_uploads}" alt="{$product.name}" style="">
+                                <a href="{:get_index('product/detail',['product_id'=>$product.product_id])}" title="{$product.name}" target="_self"><i class="fa fa-link"></i></a>
+                                <button type="button" class="met-img-showbtn" data-imglist="{$product.name}*{$product.cover|get_uploads}"><i class="fa fa-search"></i></button>
+                            </dt>
+                            <dd>
+                                <h3 style="text-align: left;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{$product.name}</h3>
+                                <span>
+                                    <a href="{:get_index('product/detail',['product_id'=>$product.product_id])}">
+                                        <img class="buy" src="__IMG__/buy.png" alt=""/>
+                                        <img class="buy1" src="__IMG__/buy1.png" alt=""/>
+                                    </a>
+                                    <var style="float: right;font-size: 14px;color:#fff;line-height: 32px;">￥{$product.price} / {$product.unit}</var>
+                                   
+                                </span>
+                            </dd>
+                        </dl>
+                    </li>
+                    {/volist}
+                    <!--案例列表循环结束-->
+                </ul>
+                <!--分页-->
+                <!-- 分页选中样式    page-active -->
+                <div class="hidden-xs">
+                    <div class="met_pager">
+                        {for start="1" end="$pageCount+1" step="1" name="i"}
+                        <a {if $i == $page}class="page-active"{/if} href="{:get_index('product/index')}?page={$i}" class="thisclass">{$i}</a>
+                        {/for}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+{include file="./public/static/block/index/foot.html"}

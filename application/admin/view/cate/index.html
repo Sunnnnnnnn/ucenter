@@ -1,0 +1,100 @@
+{include file="./public/static/block/admin/head.html"}
+{include file="./public/static/block/admin/nav.html"}
+<!--/. NAV TOP  -->
+{include file="./public/static/block/admin/leftNav.html"}
+<!-- /. NAV SIDE  -->
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    分类管理 <small>用于管理分类信息</small>
+                </h1>
+
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               分类列表
+                <div style="float: right;padding-top:5px;"><a style="padding: 5px 20px;background: #32C2CD;color: #fff;border-radius: 5px;" href="{:url('cate/add')}">新增分类</a></div>
+           </div>
+           <div style="padding:15px;overflow: hidden;">
+               <form action="{:url('cate/index')}" method="post">
+                    <input style="padding:0 5px;display: block;height:30px;float: left;" type="input" name="search" value="{$search}" placeholder='查询分类名称或ID'>
+                   <input style="outline: none;border:none;background: #32C2CD;color:#fff;padding:0 15px;display: block;float: left;height:30px;margin-left: 10px;" type="submit" name="提交">
+               </form>
+           </div>
+           <div class="panel-body">
+               <div class="table-responsive" style="overflow: hidden;">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                    <thead>
+                        <tr role="row">
+
+                            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 230px;">分类名</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 209px;">子类</th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 88px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name='list' id='cate'}
+                        <tr class="gradeA odd">
+                            <td class="center ">{$cate.name}</td>
+                            <td class="center "></td>
+                            <td class="center "><a href="{:url('cate/edit',['cate_id'=>$cate.cate_id])}">修改</a> |
+                            <a href="{:url('cate/delete',['cate_id'=>$cate.cate_id])}">删除</a></td>
+                        </tr>
+                            {if array_key_exists('subs',$cate)}
+
+                            {volist name='cate.subs' id='sub'}
+                            <tr>
+                                <td class="center ">|-----------------------------------</td>
+                                <td class="center ">{$sub.name}</td>
+                                <td class="center "><a href="{:url('cate/edit',['cate_id'=>$sub.cate_id])}">修改</a> |
+                                <a href="{:url('cate/delete',['cate_id'=>$sub.cate_id])}">删除</a></td>
+                            </tr>
+                            {if array_key_exists('subs',$sub)}
+                            {volist name='sub.subs' id='s_sub'}
+                            <tr>
+                                <td class="center ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-----------------------------------</td>
+                                <td class="center ">{$s_sub.name}</td>
+                                <td class="center "><a href="{:url('cate/edit',['cate_id'=>$s_sub.cate_id])}">修改</a> |
+                                <a href="{:url('cate/delete',['cate_id'=>$s_sub.cate_id])}">删除</a></td>
+                            </tr>
+                            {/volist}
+                            {/if}
+                            {/volist}
+                            {/if}
+                        {/volist}
+                    </tbody>
+                </table>
+
+
+
+                <div style="height: 54px">
+                    <style type="text/css">
+                        .pagination{
+                            float: right;
+                        }
+                    </style>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+<!-- /. PAGE WRAPPER  -->
+
+
+
+
+
+
+{include file="./public/static/block/admin/foot.html"}

@@ -1,0 +1,73 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+<!--内容部分-->
+<div class="side-content " data-original="http://photo.lehur.com/demot31/cpbg.jpg">
+    <!--分类 搜索-->
+    <div class="subnav-box ">
+        <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a href="javascript:;"><b><i class="fa fa-search"></i></b></a>
+
+                <form method="get" action="">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn"><i class="icon wb-search"
+                                                                              aria-hidden="true"></i></button>
+                            <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                        </div>
+                    </div>
+                </form>
+            </li>
+            {volist name='cates' id='cate'}
+              <li class="subnav-bin"><a href='{:get_index("article/index",["cate_id"=>$cate.cate_id])}'><b>{$cate.name}</b></a></li>
+             {/volist}
+        </ul>
+    </div>
+    <!--列表-->
+    <section class="met-news animsition ">
+        <div class="container">
+            <div class="row">
+                <div class="news-list">
+                    <ul class="met-page-ajax" data-scale=''>
+                        <!--新闻列表循环开始-->
+                        {volist name='articles' id='article'}
+                        <li class=" news-bin">
+                            <a href="{:get_index('article/detail',['article_id' =>$article.article_id])}" title="" target='_self'
+                               class="image left">
+                                <img class="media-object" src="{$article.cover|get_uploads}"
+                                     alt="{$article.title}">
+                            </a>
+                             <span>
+                                 <b>2017-07-05 <i class="icon wb-eye margin-right-5" aria-hidden="true"></i>{$article.views}</b>
+                                 <a href="{:get_index('article/detail',['article_id' =>$article.article_id])}" title="" target='_self' class="name">{$article.title}</a>
+                                 <p>{$article.content}</p>
+                                 <a href="{:get_index('article/detail',['article_id'=>$article.article_id])}" title="{$article.title}" target='_self' class="more"><i>查看文章</i></a>
+                             </span>
+
+                                    <a href="{:get_index('article/detail',['article_id' =>$article.article_id])}" title="{$article.title}" target='_self'
+                                       class="image right">
+                                <img class="media-object" src="{$article.cover|get_uploads}"
+                                     alt="{$article.title}">
+                            </a>
+                        </li>
+                        <!-- <li class=" news-bin"> -->
+                        {/volist}
+                        <!--新闻列表循环结束-->
+                    </ul>
+                    <!--分页-->
+                    <div class="hidden-xs">
+                        <div style="display: block !important;" class='met_pager'>
+                        {for start="1" end="$pageCount+1" step="1" name="i"}
+                        <a {if $i == $page}class="page-active"{/if} href="{:get_index('article/index')}?page={$i}" class="thisclass">{$i}</a>
+                        {/for}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+{include file="./public/static/block/index/foot.html"}

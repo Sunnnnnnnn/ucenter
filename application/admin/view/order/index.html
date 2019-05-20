@@ -1,0 +1,138 @@
+{include file="./public/static/block/admin/head.html"}
+{include file="./public/static/block/admin/nav.html"}
+<!--/. NAV TOP  -->
+{include file="./public/static/block/admin/leftNav.html"}
+<!-- /. NAV SIDE  -->
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    用户订单管理 <small>用于管理用户订单</small>
+                </h1>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               订单信息列表
+               <!-- <div style="float: right;padding-top:5px;"><a style="padding: 5px 20px;background: #32C2CD;color: #fff;border-radius: 5px;" href="{:url('order/add')}">新增用户订单</a></div> -->
+           </div>
+           <div style="padding:15px;overflow: hidden;">
+               <form action="{:url('order/index')}" method="post">
+                    <input style="padding:0 5px;display: block;height:30px;float: left;" type="input" name="search" value="{$search}" placeholder='查询用户订单名称或手机号码'>
+                    <input style="outline: none;border:none;background: #32C2CD;color:#fff;padding:0 15px;display: block;float: left;height:30px;margin-left: 10px;" type="submit" name="查询">
+                </form>
+                
+            </div>
+            <div style="clear: none;padding:0 15px 15px 15px;overflow: hidden;">
+                订单状态筛选:
+                <select style="padding: 3px 10px;outline: none;border: none;border: 1px solid #ccc;" name='order_id' id='order_select'>
+                    <option value="" {if $paystatus===''}selected=''{/if}>全部</option>
+                    <option value="0" {if $paystatus==='0'}selected=''{/if}>线上未付款</option>
+                    <option value="1" {if $paystatus==='1'}selected=''{/if}>线上已付款</option>
+                    <option value="2" {if $paystatus==='2'}selected=''{/if}>线下未付款</option>
+                    <option value="3" {if $paystatus==='3'}selected=''{/if}>线下已付款</option>
+                </select>
+                <script type="text/javascript">
+                    $('#order_select').change(function(){
+                        var _val=$(this).find('option:selected').val();
+                        window.location.href="/admin.php/order/index/paystatus/"+_val+".html";
+                    });
+                </script>
+            </div>
+        <div class="panel-body">
+           <div class="table-responsive" style="overflow: hidden;">
+           <style type="text/css">
+            thead tr th{
+                text-align: center;
+            }
+            tbody tr td{
+                vertical-align: middle !important;
+                text-align: center;
+             }
+             tbody tr td img{
+                width:150px !important;
+             }
+         </style>
+            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">订单号</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">用户ID</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">用户手机号</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">订单金额</th>
+                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="ascending" style="width: 148px;">订单状态</th>
+
+
+                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 88px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {volist name='list' id='order'}
+                    <tr class="gradeA odd">
+                        <td class="sorting_1">
+                            <a href="#ecms" onclick="window.open('http://ucenter.znc365.com/member.php/shop/orderdetail/order_no/{$order.order_id}/uid/{$order.uid}','','width=700,height=600,scrollbars=yes,resizable=yes');">
+                                        {$order.order_id}</a>
+                        </td>
+                        <td class="sorting_1"><a href="{:get_admin('user/edit',['uid'=>$order.uid])}"> {$order.uid}</a></td>
+                        <td class="sorting_1">{$order.mobile}</td>
+                        <td class="sorting_1">
+
+                            {if in_array(get_cate_id_by_order_id($order.order_id),$p_cate_ids)}
+                                {:get_user_discount($order.uid) * $order.money}&nbsp;(<s>{$order.money}</s>)
+                            {elseif in_array(get_cate_id_by_order_id($order.order_id),$s_cate_ids)}
+                                {if get_user_level($order.uid)>=3}
+                                0
+                                {else}
+                                {$order.money}
+                                {/if}
+                            {elseif in_array(get_cate_id_by_order_id($order.order_id),$e_cate_ids)}
+                                {if get_user_level($order.uid)>=2}
+                                0
+                                {else}
+                                {$order.money}
+                                {/if}
+                            {else}
+                                {$order.money}
+                            {/if}
+                        </td>
+                        <td class="sorting_1">{if $order.paystatus == 0}线上未付款{elseif $order.paystatus==1}线上已付款{elseif $order.paystatus==2}线下未付款 {elseif $order.paystatus==3}线下已付款{elseif $order.paystatus==4}积分兑换{/if}</td>
+                        <td class="center ">
+                            <div style="width:125px;text-align: center;margin: auto;">
+                                {if $order.paystatus==0||$order.paystatus==2}<a onclick="return confirm('确认是否收款?')?true:false;" href="{:url('order/setpaystatus',['order_id'=>$order.order_id])}">收款</a> {/if}
+                            </div>
+                        </td>
+                    </tr>
+                    {/volist}
+                </tbody>
+            </table>
+            <div style="height: 54px">
+                <div style="margin: 20px 0;border-radius: 4px;float: right;line-height: 34px;padding-left: 20px;">共{$total}条数据</div>
+                <style type="text/css">
+                    .pagination{
+                        float: right;
+                    }
+                </style>
+                {$list->render()} 
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+</div>
+
+</div>
+<!-- /. PAGE WRAPPER  -->
+
+
+
+
+
+
+{include file="./public/static/block/admin/foot.html"}

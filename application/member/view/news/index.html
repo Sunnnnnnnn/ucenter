@@ -1,0 +1,124 @@
+{include file="./public/static/block/member/head.html"}
+{include file="./public/static/block/member/header.html"}
+{include file="./public/static/block/member/leftNav.html"}
+    <!-- 内容开始 -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">会员圈子文章列表</h1>
+            </div>
+            <style>
+                .pagination li a{
+                    float: none !important;
+                    display: inline;
+                    padding: 6px 12px;
+                }
+                .pagination li span{
+                    float: none !important;
+                    display: inline;
+                    padding: 6px 12px;
+                }
+                /*pc端*/
+                @media screen and (min-width: 993px) {
+                    .w-isshou{display: block;}
+                    .w-ishide{display: block;}
+                    .w-search-order{display: block;}
+                }
+                /*iPad*/
+                @media screen and (max-width: 992px){
+                    .w-isshou{display: block;}
+                    .w-ishide{display: block;}
+                    .w-search-order{display: block;}
+                }
+                /*手机*/
+                @media screen and (max-width: 767px){
+                    .w-isshou{display: block;}
+                    .w-ishide{display: none !important;}
+                    .w-order-num{display: block;}
+                    .w-search-order{display: none;}
+                }
+
+            </style>
+            <div class="wrapper-md">
+                <!-- /.row -->
+                <style>
+                    tbody tr td{
+                        text-align: center;
+                    }
+                </style>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped table_striped table_hover">
+                                <tbody>
+                                <tr class="color1">
+                                    <td style="text-align: left;" class="td25" colspan="2">
+                                        <a href="{:get_member('news/add')}">添加文章</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered table-hover table-striped table_striped table_hover">
+                                <thead>
+
+                                <tr>
+
+
+                                    <th class="td15"><div align="center">文章标题</div></th>
+
+                                    <th class="td15"><div align="center">发布时间</div></th>
+                                    <th class="td15"><div align="center">操作</div></th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                    {volist name='news' id='item'}
+                                    <tr>
+                                        <td><a href="{:get_index('news/detail',['news_id'=>$item.news_id])}" target="_blank">{$item.title}</a></td>
+                                        <td>{$item.dateline|date='Y-m-d',###}</td>
+                                        <td>
+                                            <a href="{:get_member('news/edit',['news_id'=>$item.news_id])}">修改</a>|
+                                            <a href="{:get_member('news/delete',['news_id'=>$item.news_id])}">删除</a>
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- /.row -->
+                <!--分页-->
+                <nav style="">
+                    <ul style="display: block;" class="pagination">
+                        <li style="overflow: hidden;display: block;text-align: center;padding: 6px 12px;">
+                            <a class="w-isshou" title="总数"><b>30</b> </a>
+                            <a class="w-ishide" href="javascript:;">首页</a>
+                            <a class="w-isshou" href="javascript:;">上一页</a>
+                            <a class="w-ishide" href="javascript:;">1</a>
+                            <span class="w-ishide">2</span>
+                            <a class="w-isshou" href="javascript:;">下一页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+    <!-- 内容结束 -->
+    <script type="text/javascript">ZCenter_ActiveLeftMenu("aDashboard");</script>
+    <!-- 底部开始 -->
+    {include file="./public/static/block/member/foot.html"}

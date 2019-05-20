@@ -1,0 +1,87 @@
+{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+<!--内容部分-->
+<div class="side-content " data-original="">
+    <!--分类 搜索-->
+    <div class="subnav-box ">
+        <ul class="subnav-cut">
+            <li class="subnav-bin subnav-search">
+                <a href="javascript:;"><b><i class="fa fa-search"></i></b></a>
+                <form method="get" action="">
+                    <div class="form-group">
+                        <div class="input-search">
+                            <button type="submit" class="input-search-btn">
+                                <i class="icon wb-search" aria-hidden="true"></i></button>
+                            <input class="form-control none-border" name="q" value="" placeholder="搜索">
+                        </div>
+                    </div>
+                </form>
+            </li>
+            {volist name='cates' id='cate'}
+              <li class="subnav-bin"><a href='{:get_index("article/index",["cate_id"=>$cate.cate_id])}'><b>{$cate.name}</b></a></li>
+             {/volist}
+        </ul>
+    </div>
+    <!--新闻详情-->
+    <section class="met-shownews animsition">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 met-shownews-body">
+                    <div class="row">
+                        <div class="met-shownews-header">
+                            <h1>{$article.title}</h1>
+                            <div class="info">
+                                <span>{$article.dateline|date='Y-m-d H-i-s',###}</span>
+                                <span>admin</span>
+                                <span>
+                                    <i class="icon wb-eye margin-right-5" aria-hidden="true"> {$article.views}</i>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="met-editor lazyload clearfix">
+                            <div>{$article.content}
+                                <div id="metinfo_additional"></div>
+                            </div>
+                        </div>
+                        <div class="met-shownews-footer">
+                            <ul class="pager pager-round">
+                                {if $next}
+                                <li class="previous ">
+                                    <a href='{:get_index("article/detail",["article_id"=>$next.article_id])}'>下一片文章 : {$next.title}</a>
+                                </li>
+                                {/if}
+
+                                <li class="next ">
+                                    <a href='{:get_index("article/index")}'>返回列表</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--为您推荐-->
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="met-news-bar">
+                            <div class="sidenews-lists">
+                                <h3><span>为您推荐</span></h3>
+                                <ul>
+                                    {volist name='hots' id= 'hot'}
+                                    <li>
+                                        <a href='{:get_index("article/detail",["article_id"=>$hot.article_id])}' title=""
+                                           target='_self'>
+                                            <img data-original="{$hot.cover|get_uploads}">
+                                            <b>{$hot.title}</b>
+                                            <p><i class="fa fa-clock-o"></i> {$hot.dateline|date='Y-m-d',###}</p>
+                                        </a>
+                                    </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--底部-->
+       {include file="./public/static/block/index/foot.html"}

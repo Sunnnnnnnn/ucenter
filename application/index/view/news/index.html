@@ -1,0 +1,168 @@
+﻿{include file="./public/static/block/index/head.html"}
+{include file="./public/static/block/index/leftNav.html"}
+
+<!--内容部分-->
+<div class="side-content ">
+    <!--列表-->
+    <section class="w-message">
+        <div style="background-image: url('__IMG__/w-message-banner.jpg');background-position: center;background-size: cover;background-repeat: no-repeat" class="w-message-banner"></div>
+        <div class="w-message-content">
+            <div class="w-box">
+                <div class="w-box-title">
+                    <span>会员圈子</span>/ <span>Community</span>
+                </div>
+                <div class="w-box-c">
+                    <div class="w-box-c-left">
+
+                {volist name='news' id='item'}
+                    <div>
+                        <div class="w-left-title">
+                            <p>
+                                <img src="{if $item.u_face}{$item.u_face|get_uploads}{else}__IMG__/w-ht-logo.png{/if}" alt=""/><span>{$item.uname}</span>
+                            </p>
+                            <span>{$item.dateline|date='Y-m-d',###}</span>
+                        </div>
+                         <style>
+                               .title-link{
+                                   color:#000;
+                               }
+                                .title-link:hover{
+                                    color:#00c0ff;
+                                }
+                           </style>
+                           <a class="title-link" href="{:get_index('news/detail',['news_id'=>$item.news_id])}">
+                               <p style="padding:10px 0;font-size: 18px;font-weight:bold;">{$item.title}</p>
+                           </a>
+                        <div style="color:#000;" class="w-left-news">
+                            {$item.content}
+                        </div>
+                        <div class="w-comment">
+                            <form action="{:get_index('news/addcomment')}" method="post">
+                                <p>评论</p>
+                                <input type="hidden" name="news_id" value="{$item.news_id}">
+                                <textarea name='content'></textarea>
+                                <button id="btn" type="submit">发表</button>
+                            </form>
+                        </div>
+                        <div class="w-comment-details">
+                            <ul>
+                                {volist name='item.comments' id= 'comment'}
+                                <li>
+                                    <a href="javascript:;">
+                                        <img src="{if $comment.u_face}{$comment.u_face|get_uploads}{else}__IMG__/w-ht-logo.png{/if}" alt=""/>
+                                        <p><var style="font-style: normal">{$comment.uname}：</var>{$comment.content}</p>
+                                        <span>{$comment.dateline|date='Y-m-d',###}</span>
+                                    </a>
+                                </li>
+                                {/volist}
+                            </ul>
+                            
+                        </div>
+                        </div>
+                        {/volist}
+                        <script type="text/javascript">
+                            var a=1;
+                            $('#btn').on('click',function(){
+                                $.ajax({
+                                    url:'http://ucenter.znc365.com/index.php/auth/isLogin',
+                                    type:'GET',
+                                    async:false,
+                                    data:'',
+                                    success:function(data){
+                                        if(data.code==200){
+                                            if(data.data==0){
+                                                alert('你还没有登录,请先登录!');
+                                                 $('.w-yn-login-mash').fadeIn();
+                                                 $('.w-login').show();
+                                                 a=1;
+                                                 $('.pp').val('1');
+                                            }else if (data.data==1) {
+                                                a=2;
+                                            }
+                                        }else{
+                                            alert('获取登录状态失败!')
+                                        }
+                                    }
+                                });
+
+
+                                if(a==1){
+                                return false;
+                                }else if(a==2){
+                                    return true;
+                                }
+                            });
+
+
+                        </script>
+                        <!--分页-->
+                        <style type="text/css">
+                            .w-message-page{
+
+                            }
+                            .w-message-page>a{
+                                 padding:5px 10px;
+                                 border:none !important;
+                                 color:#00c0ff;
+                                 background: #eee;
+                            }
+                            .w-message-page>a.btn-class{
+                                color:#;
+                                background: #00c0ff;
+                                color:#fff;
+                                
+                            }
+                        </style>
+                        <div class="w-message-page">
+                            {for start="1" end="$pageCount+1" step="1" name="i"}
+                            <a {if $i == $page}class="btn-class"{/if} href="{:get_index('news/index')}?page={$i}" >{$i}</a>
+                            {/for}
+                            </div>
+                    </div>
+                    <div class="w-box-c-right">
+                        <div class="w-message-hot">
+                            <div class="w-message-hot-content">
+                                <p>
+                                    <img src="__IMG__/w-hot.png" alt=""/>
+                                    <span>热门推荐</span>
+                                </p>
+                                <ul>
+                                    {volist name = 'hots' id='item'}
+                                    <li><a href="{:get_index('news/detail',['news_id'=>$item.news_id])}">{$item.title}</a></li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(window).on('resize',function(){
+            var _h=$(window).height();
+            var _w=$(window).width();
+            if(_w>1000){
+                if(_h>700){
+                    $('.w-message').height(_h);
+                }else{
+                    $('.w-message').css('height','700px');
+                }
+            }else{
+                $('.w-message').css('height','auto');
+            }
+        });
+        var _h=$(window).height();
+        var _w=$(window).width();
+        if(_w>1000){
+            if(_h>700){
+                $('.w-message').height(_h);
+            }else{
+                $('.w-message').css('height','700px');
+            }
+
+        }else{
+            $('.w-message').css('height','auto');
+        }
+    </script>
+    {include file="./public/static/block/index/foot.html"}

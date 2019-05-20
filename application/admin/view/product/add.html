@@ -1,0 +1,120 @@
+{include file="./public/static/block/admin/head.html"}
+{include file="./public/static/block/admin/nav.html"}
+<!--/. NAV TOP  -->
+{include file="./public/static/block/admin/leftNav.html"}
+<script src="/public/static/js/editor/kindeditor-all-min.js"></script>
+<script src="/public/static/js/editor/lang/zh-CN.js"></script>
+<!-- /. NAV SIDE  -->
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    商品添加 <small>用于商品信息新增</small>
+                </h1>
+
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                添加商品
+            </div>
+            <div class="panel-body">
+            <style type="text/css">
+                ul,ol,li{
+                    list-style: none;
+                }
+                tbody tr{
+                    border-bottom:1px solid #ccc;
+
+                }
+                 tbody tr:hover{
+                    background: #E6E6E6;
+                 }
+                 tbody tr.tr1:hover{
+                    background:#fff;
+                 }
+                 tbody tr th{
+                    text-align: center;
+                 }
+                tbody tr td{
+                      padding:10px 0;
+                }
+                tbody tr td input[type=text]{
+                    padding:3px 5px;
+                    border:none;
+                    outline: none;
+                    border:1px solid #ccc;
+                }
+                tbody tr td select{
+                    padding:3px 5px;
+                    border:none;
+                    outline: none;
+                    border:1px solid #ccc;
+                    margin-right:5px;
+                }
+                tbody tr td ul{
+                    overflow: hidden;
+                     margin: 0px;
+                     padding:0;
+                }
+                tbody tr td ul li{
+                    float: left;
+
+                }
+                .bt-big{
+                    outline: none;
+                    border:none;
+                    color:#fff;
+                    background: #32C2CD;
+                    padding:8px 20px;
+                    font-size: 16px;
+                }
+            </style>
+                <form action="{:url('product/add')}" method="post" enctype="multipart/form-data">
+                    <table width="100%" border="0" cellspacing="0" class="table-data form">
+                        <tbody>
+                            <tr><th>标题:</th><td><input type="text" name="name" value="" class="input w-300"></td></tr>
+                            <tr><th>商品分类:</th><td>
+                            <select name="cate_id">
+                                {volist name='cates' id='cate'}
+                                <option value="{$cate.cate_id}">{$cate.name}</option>
+                                {/volist}
+                            </select>
+                            </td></tr>
+                            <tr><th>规格:</th><td><input type="text" name="spec" value="" class="input w-300"> <span style="color: red">注:不同规格用";"隔开,如:含量：N+P+K≥50%;净含量：5kg </span> </td></tr>
+                            <tr><th>封面图:</th><td><input type="file" name="cover" ></td></tr>
+                            <tr><th>价格:</th><td><input type="text" name="price" value="" class="input w-300"></td></tr>
+                            <tr><th>单位:</th><td><input type="text" name="unit" value="" class="input w-300"></td></tr>
+                            <tr><th>库存:</th><td><input type="text" name="stock" value="" class="input w-300"></td></tr>
+                            <tr><th>描述:</th><td><textarea name="desc" id="editor_id" style="width:700px;height:300px;"></textarea></td></tr>
+                            <tr class="tr1"><th class="clear-th-bottom"></th><td class="clear-td-bottom" colspan="10"><input type="submit" class="bt-big" value="提交数据"></td></tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('#editor_id', {
+            resizeType: 1,
+            allowPreviewEmoticons: false,
+            allowImageUpload: false,
+            items: [
+            'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+    'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+    'anchor', 'link', 'unlink', '|', 'about']
+        });
+
+    });
+</script>
+<!-- /. PAGE WRAPPER  -->
+{include file="./public/static/block/admin/foot.html"}
